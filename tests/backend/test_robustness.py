@@ -56,7 +56,9 @@ def test_failed_commit_removes_the_stored_file(db_sessionmaker, tmp_path, monkey
     assert list(storage.images_dir.iterdir()) == []
 
 
-@pytest.mark.parametrize("filename", ["../secreto.txt", "..\\secreto.txt", "sub/archivo.png", "/etc/passwd"])
+@pytest.mark.parametrize(
+    "filename", ["../secreto.txt", "..\\secreto.txt", "sub/archivo.png", "sub\\archivo.png", "/etc/passwd", "..", ""]
+)
 def test_storage_rejects_paths_outside_its_folder(tmp_path, filename):
     storage = LocalStorage(tmp_path)
     with pytest.raises(ValueError):

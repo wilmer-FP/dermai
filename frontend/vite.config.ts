@@ -41,6 +41,8 @@ export default defineConfig({
     strictPort: true,
   },
   test: {
+    // Las pruebas usan siempre la URL relativa, aunque el entorno (p. ej. CI) defina otra.
+    env: { VITE_API_BASE_URL: "/api/v1" },
     environment: "jsdom",
     globals: true,
     setupFiles: ["./src/test/setup.ts"],

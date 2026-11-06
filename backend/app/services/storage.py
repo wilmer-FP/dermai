@@ -8,8 +8,11 @@ class LocalStorage:
         self.images_dir = (base_dir / "images").resolve()
 
     def path_for(self, filename: str) -> Path:
+        # Defensa en profundidad: nunca salir del directorio de almacenamiento. Se rechazan los
+        # separadores de ruta de cualquier sistema (en Linux "\" sería un carácter válido).
+        if not filename or "/" in filename or "\\" in filename or filename in {".", ".."}:
+            raise ValueError(f"Nombre de archivo no válido: {filename!r}")
         path = (self.images_dir / filename).resolve()
-        # Defensa en profundidad: nunca salir del directorio de almacenamiento.
         if path.parent != self.images_dir:
             raise ValueError(f"Nombre de archivo no válido: {filename!r}")
         return path
