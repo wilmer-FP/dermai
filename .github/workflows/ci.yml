@@ -1,0 +1,48 @@
+# Integración continua: linting y pruebas del backend, del módulo de IA y del frontend.
+# Las pruebas de integración con PostgreSQL se omiten (no hay base de datos en CI).
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            backend/requirements*.txt
+            ai/requirements.txt
+      - name: Instalar dependencias (PyTorch solo CPU)
+        run: |
+          python -m pip install -r backend/requirements-dev.txt
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu -r ai/requirements.txt
+      - run: python -m ruff check .
+      - run: python -m pytest -rs --cov=backend/app --cov=ai --cov-report=term:skip-covered
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run coverage
+      - run: npm run build

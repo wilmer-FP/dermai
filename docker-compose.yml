@@ -1,0 +1,28 @@
+# DermAI - PostgreSQL de DESARROLLO local.
+# Las credenciales se leen del archivo .env de la raíz (ver .env.example).
+# Uso:  docker compose up -d --wait   |   docker compose stop
+
+name: dermai
+
+services:
+  db:
+    image: postgres:16
+    container_name: dermai-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?Define POSTGRES_USER en .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Define POSTGRES_PASSWORD en .env}
+      POSTGRES_DB: ${POSTGRES_DB:?Define POSTGRES_DB en .env}
+    ports:
+      # Solo accesible desde este equipo. 5433 evita conflictos con otros PostgreSQL en 5432.
+      - "127.0.0.1:${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:

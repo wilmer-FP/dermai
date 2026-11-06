@@ -1,0 +1,4 @@
+# Los scripts de shell se ejecutan en Linux (contenedor del Space): siempre con saltos de línea LF.
+*.sh text eol=lf
+# Los scripts de PowerShell, con CRLF en Windows.
+*.ps1 text eol=crlf

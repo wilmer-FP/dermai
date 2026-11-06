@@ -1,0 +1,107 @@
+# ==========================================================
+# DermAI - .gitignore
+# ==========================================================
+
+# ---------- Variables de entorno ----------
+.env
+.env.*
+!.env.example
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+.eggs/
+build/
+dist/
+pip-wheel-metadata/
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# Cachés y herramientas de Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.ipynb_checkpoints/
+
+# ---------- Node.js / Frontend ----------
+node_modules/
+frontend/dist/
+frontend/build/
+frontend/coverage/
+.vite/
+.eslintcache
+.npm/
+.pnpm-store/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.tsbuildinfo
+
+# ---------- Modelos de IA (pesos y checkpoints) ----------
+# El código de ai/models/ SÍ se versiona; solo se ignoran los archivos binarios.
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.h5
+*.safetensors
+checkpoints/
+weights/
+
+# ---------- Datasets ----------
+# Los datasets no se versionan (tamaño y licencias). Se conservan .gitkeep y README.
+ai/datasets/*
+!ai/datasets/.gitkeep
+!ai/datasets/README.md
+
+# ---------- Resultados de experimentos ----------
+ai/experiments/**/outputs/
+ai/experiments/**/runs/
+ai/experiments/**/logs/
+mlruns/
+wandb/
+lightning_logs/
+tensorboard/
+
+# ---------- Despliegue ----------
+# Carpeta generada por scripts/build-space.ps1 (incluye los pesos del modelo)
+deploy/huggingface/build/
+
+# ---------- Almacenamiento local de imágenes ----------
+storage/*
+!storage/.gitkeep
+
+# ---------- Logs y temporales ----------
+*.log
+logs/
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+*~
+
+# ---------- Sistema operativo ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------- Editores / IDE ----------
+.vscode/*
+!.vscode/extensions.json
+.idea/

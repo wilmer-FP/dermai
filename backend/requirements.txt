@@ -1,0 +1,19 @@
+# DermAI - Dependencias del backend (Etapa 2)
+# Python 3.12
+
+fastapi==0.115.12
+uvicorn[standard]==0.34.2
+pydantic-settings==2.9.1
+
+# Base de datos (Etapa 3)
+SQLAlchemy==2.0.41
+alembic==1.16.1
+psycopg[binary]==3.2.9
+
+# API REST (Etapa 4): subida de archivos y validación de imágenes
+python-multipart==0.0.20
+Pillow==11.2.1
+
+# Procesamiento de imágenes (Etapa 6): módulo ai/preprocessing
+numpy==2.5.4
+opencv-python-headless==5.0.0.93

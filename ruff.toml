@@ -1,0 +1,21 @@
+# Linter de Python (ruff) para backend/, ai/ y tests/.
+# Uso: .\backend\.venv\Scripts\python -m ruff check .
+line-length = 120
+target-version = "py312"
+extend-exclude = ["backend/.venv", "frontend", "storage", "ai/datasets", "ai/experiments/runs"]
+
+[lint]
+# E/W: estilo, F: errores (pyflakes), I: orden de imports, B: errores probables, UP: sintaxis moderna
+select = ["E", "W", "F", "I", "B", "UP"]
+# UP042: AnalysisStatus(str, Enum) se mantiene; StrEnum cambiaría su conversión a texto y su uso en SQLAlchemy.
+# UP046: Page[T] usa Generic, que es la forma documentada de los modelos genéricos de Pydantic.
+ignore = ["UP042", "UP046"]
+
+[lint.isort]
+known-first-party = ["app", "ai"]
+known-local-folder = ["conftest", "db_utils", "synthetic"]
+
+[lint.per-file-ignores]
+# Las pruebas importan módulos tras `pytest.importorskip` y las migraciones siguen la plantilla de Alembic.
+"tests/**" = ["E402"]
+"backend/alembic/**" = ["E501"]

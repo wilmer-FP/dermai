@@ -1,0 +1,7 @@
+# DermAI - Dependencias del módulo de modelos (Etapa 7)
+# Se instalan en el mismo entorno del backend (backend/.venv), además de backend/requirements.txt.
+# Ruedas con CUDA 12.8 (necesarias para GPUs NVIDIA Blackwell, p. ej. RTX 50xx). Instalación:
+#   .\backend\.venv\Scripts\python -m pip install -r ai\requirements.txt --index-url https://download.pytorch.org/whl/cu128
+# Sin GPU NVIDIA, usar el índice https://download.pytorch.org/whl/cpu
+torch==2.11.0
+torchvision==0.26.0

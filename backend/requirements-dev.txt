@@ -1,0 +1,9 @@
+# DermAI - Dependencias de desarrollo y pruebas del backend
+-r requirements.txt
+
+pytest==8.3.5
+httpx==0.28.1
+
+# Cobertura y linting (Etapa 8)
+pytest-cov==7.1.0
+ruff==0.17.4
