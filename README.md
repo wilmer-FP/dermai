@@ -4,7 +4,7 @@
 
 > ⚠️ **Advertencia:** DermAI es un prototipo con fines **educativos y experimentales**. **No es una herramienta de diagnóstico médico**, no ha sido validado clínicamente y no sustituye la evaluación de profesionales sanitarios. Ningún resultado generado por el sistema debe usarse para tomar decisiones clínicas.
 
-**Demo en línea** (gratuita, puede tardar 1–2 minutos en despertar): <https://wilmer-fp.github.io/dermai/> · API: <https://huggingface.co/spaces/Wilmer-FP/dermai>
+**Demo en línea:** <https://wilmer-fp.github.io/dermai/>. El análisis se hace **en tu navegador** con OpenCV.js y las fotos no se envían a ningún servidor.
 
 ---
 
@@ -25,6 +25,9 @@ La valoración visual de lesiones cutáneas, en particular la identificación de
   - Imagen procesada con leyenda y aviso incrustado.
   - Características de color, textura (GLCM), bordes y forma, y avisos de calidad de la foto.
 - **Historial** paginado y filtrable, reanálisis y borrado completo de una imagen con sus análisis.
+- **Dos modos de ejecución:**
+  - con servidor (API FastAPI);
+  - todo en el navegador, con la heurística portada a TypeScript + OpenCV.js y los datos en IndexedDB. Es el modo que usa la demo pública.
 - **Entrenamiento reproducible:**
   - Se registran configuración, versiones, semilla y hashes de los datos.
   - Validación cruzada y comparación con la heurística.
@@ -44,7 +47,7 @@ Con 13 imágenes, estas cifras **no son representativas**. El modelo falla con f
 
 | Capa | Tecnología |
 |---|---|
-| Frontend | React 19, TypeScript, Vite 7, React Router 7 |
+| Frontend | React 19, TypeScript, Vite 7, React Router 7; OpenCV.js 5 e IndexedDB en modo navegador |
 | Backend | Python 3.12, FastAPI, SQLAlchemy 2, Alembic, Pydantic |
 | Base de datos | PostgreSQL 16 (Docker) |
 | Procesamiento de imágenes | OpenCV 5, NumPy, Pillow |
@@ -119,9 +122,10 @@ npm run dev --prefix frontend
 powershell -ExecutionPolicy Bypass -File scripts\test-all.ps1
 ```
 
-**213 pruebas automáticas** (104 del backend, 42 de procesamiento y modelo, 67 del frontend), con cobertura de líneas del 96 %. Incluyen:
+**243 pruebas automáticas** (107 del backend, 42 de procesamiento y modelo, 94 del frontend). Incluyen:
 - integración con PostgreSQL;
 - un entrenamiento completo en miniatura;
+- **paridad del análisis en el navegador con Python** (≥ 99,99 % de píxeles iguales);
 - privacidad (eliminación de EXIF y GPS), robustez y el modo demo.
 
 En GitHub se ejecutan automáticamente en cada `push` (GitHub Actions).
@@ -133,7 +137,7 @@ Ver [docs/testing.md](docs/testing.md).
 | Documento | Contenido |
 |---|---|
 | [Instalación](docs/installation.md) | Puesta en marcha paso a paso y problemas frecuentes |
-| [Despliegue](docs/deployment.md) | Demo gratuita: GitHub Pages y Hugging Face Spaces, modo demo |
+| [Despliegue](docs/deployment.md) | Demo gratuita en GitHub Pages con análisis en el navegador; despliegue opcional de la API |
 | [Arquitectura](docs/architecture.md) | Componentes, comunicación y flujo |
 | [Base de datos](docs/database.md) | Modelo entidad-relación, migraciones y PostgreSQL en Docker |
 | [API REST](docs/api.md) | Endpoints, validaciones, respuestas y errores |
@@ -151,7 +155,7 @@ Ver [docs/testing.md](docs/testing.md).
 - **Privacidad.** No se piden datos personales, se eliminan los metadatos de las fotos y el usuario puede borrar sus imágenes.
 - **Datos de entrenamiento.** Son públicos y con licencia explícita, citados en la aplicación; no hay imágenes clínicas en el repositorio.
 - **Métricas honestas.** Se documentan los fallos conocidos y la falta de evaluación de sesgos por tono de piel.
-- **Sin autenticación.** La versión local no debe exponerse a internet. La demo pública usa un **modo demo**: cada navegador solo ve sus imágenes, que se borran a las 6 horas, y hay un límite de uso.
+- **Sin autenticación.** La versión con servidor no debe exponerse a internet sin el modo demo. La demo pública no tiene servidor: todo ocurre en el navegador del visitante.
 
 Detalle en [docs/ethics.md](docs/ethics.md) y [docs/limitations.md](docs/limitations.md).
 

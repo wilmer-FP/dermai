@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { LegendItem } from "../services/analysisResult";
-import { imageFileUrl, processedImageUrl } from "../services/api";
+import { useImageSource } from "../hooks/useImageSource";
 
 interface AnalysisImageProps {
   imageId: string;
@@ -24,6 +24,9 @@ export function AnalysisImage({ imageId, analysisId, filename, hasProcessedImage
   const [view, setView] = useState<View>(hasProcessedImage ? "processed" : "original");
   const showProcessed = hasProcessedImage && view === "processed";
   const items = legend && legend.length > 0 ? legend : DEFAULT_LEGEND;
+  const originalSrc = useImageSource("original", imageId);
+  const processedSrc = useImageSource("processed", analysisId);
+  const src = showProcessed ? processedSrc : originalSrc;
 
   return (
     <figure className="card figure">
@@ -37,10 +40,13 @@ export function AnalysisImage({ imageId, analysisId, filename, hasProcessedImage
           </button>
         </div>
       )}
-      <img
-        src={showProcessed ? processedImageUrl(analysisId) : imageFileUrl(imageId)}
-        alt={showProcessed ? `Imagen procesada: ${filename}` : `Imagen analizada: ${filename}`}
-      />
+      {src ? (
+        <img src={src} alt={showProcessed ? `Imagen procesada: ${filename}` : `Imagen analizada: ${filename}`} />
+      ) : (
+        <div className="figure__placeholder" role="status">
+          Cargando imagen…
+        </div>
+      )}
       <figcaption>
         <span className="figure__name" title={filename}>
           {filename}

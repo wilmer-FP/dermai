@@ -1,105 +1,95 @@
 # Despliegue gratuito — DermAI
 
-Demo pública sin coste:
-
-- **Frontend** en **GitHub Pages**: <https://wilmer-fp.github.io/dermai/>
-- **API** en **Hugging Face Spaces** (Docker, CPU gratuita): <https://huggingface.co/spaces/Wilmer-FP/dermai>, accesible en `https://wilmer-fp-dermai.hf.space`.
+La demo pública es **solo frontend**: <https://wilmer-fp.github.io/dermai/>, publicada en GitHub Pages sin coste y sin servidor.
 
 ```
-GitHub Pages                                 Hugging Face Spaces (Docker)
-┌──────────────────────────┐  HTTPS + CORS   ┌──────────────────────────────────────┐
-│ React (build estático)   │ ──────────────▶ │ FastAPI + OpenCV + PyTorch (CPU)      │
-│ /dermai/ · sesión anónima│                 │ SQLite y archivos en /tmp (efímeros)  │
-└──────────────────────────┘                 └──────────────────────────────────────┘
+GitHub Pages (archivos estáticos)
+┌──────────────────────────────────────────────────────────────┐
+│ React + heurística de OpenCV.js (port de ai/preprocessing)   │
+│ Imágenes, análisis e historial en IndexedDB (este navegador) │
+└──────────────────────────────────────────────────────────────┘
+        Las fotos no salen del dispositivo del visitante.
 ```
 
-> La demo es un prototipo educativo, **no diagnóstico**. No tiene cuentas de usuario: la protegen el modo demo y el borrado automático, no una autenticación.
+> La demo es un prototipo educativo, **no diagnóstico**.
 
-## 1. Modo demo
+## 1. Modo navegador
 
-Se activa con `DEMO_MODE=true` (el `Dockerfile` del Space ya lo hace).
+El frontend tiene dos modos, que se eligen al compilar con `VITE_ANALYSIS_MODE`:
 
-| Variable | Valor en el Space | Efecto |
-|---|---|---|
-| `DEMO_MODE` | `true` | Cada petición necesita un identificador anónimo de sesión (cabecera `X-DermAI-Session` o parámetro `?session=`). Cada navegador solo ve sus imágenes y análisis; los de otra sesión responden 404. |
-| `DEMO_RETENTION_HOURS` | `6` | Una tarea en segundo plano borra cada 10 minutos las imágenes más antiguas, con sus análisis y archivos. |
-| `DEMO_RATE_LIMIT_PER_HOUR` | `30` | Subidas y análisis por dirección IP y hora; al superarlo, la respuesta es 429. |
-| `DATABASE_URL` | `sqlite:////tmp/dermai/dermai.db` | SQLite: no hace falta un servidor de base de datos. Se pierde al reiniciar el Space. |
-| `STORAGE_PATH` | `/tmp/dermai/storage` | Imágenes efímeras. |
-| `CORS_ORIGINS` | `https://wilmer-fp.github.io` | Solo el frontend publicado puede llamar a la API desde un navegador. |
-| `AI_DEVICE` | `cpu` | Inferencia en CPU: menos de 1 s por análisis una vez cargado el modelo. |
+| Modo | Dónde se analiza | Dónde se guardan los datos | Uso |
+|---|---|---|---|
+| `api` (por defecto) | Backend FastAPI (heurística y modelo) | PostgreSQL o SQLite y `storage/` | Desarrollo local y despliegues con servidor |
+| `browser` | En el navegador, con **OpenCV.js 5.0** | **IndexedDB** del propio navegador | Demo pública en GitHub Pages |
 
-**Frontend:**
-- genera el identificador de sesión al azar (`crypto.randomUUID`), lo guarda en `localStorage` y lo envía en cada petición;
-- muestra el aviso «Demo pública» cuando `GET /health` indica `demo_mode`;
-- reintenta durante 3 minutos si el Space está dormido (tarda 1–2 minutos en despertar).
+En modo navegador:
 
-## 2. Archivos
+- **Heurística.** `frontend/src/analysis/heuristic.ts` es un port de `ai/preprocessing` con los mismos pasos y parámetros. Las pruebas lo comparan con Python sobre imágenes de referencia: el **99,997–100 %** de los píxeles recibe la misma clase y la composición difiere como mucho en 0,0001. El análisis tarda unos 0,1–0,4 s.
+- **Descarga de OpenCV.js.** Ocupa unos 4 MB comprimido y se descarga solo la primera vez que se analiza una imagen; la página inicial sigue pesando unos 110 KB.
+- **Privacidad.** Las imágenes, los análisis y las imágenes procesadas (con el aviso incrustado) se guardan en IndexedDB y **no se envían a ningún servidor**. Cada visitante solo ve lo suyo, y lo borra desde la propia aplicación o borrando los datos del sitio.
+- **Sin modelo.** El modelo de PyTorch no está disponible en este modo; el selector de método no aparece.
 
-| Archivo | Para qué |
+## 2. Publicación
+
+El *workflow* `.github/workflows/deploy-frontend.yml` compila en modo navegador con la ruta `/dermai/` y publica en Pages en cada `push` a `main` que cambie `frontend/`. Requisito único: **Settings → Pages → Source = GitHub Actions**, ya configurado.
+
+Variables opcionales del repositorio (**Settings → Secrets and variables → Actions → Variables**):
+
+| Variable | Efecto |
 |---|---|
-| `deploy/huggingface/Dockerfile` | Imagen del Space: Python 3.12, PyTorch para CPU, usuario 1000 y configuración del modo demo |
-| `deploy/huggingface/start.sh` | Arranque: migraciones, registro del modelo y `uvicorn` en el puerto 7860 |
-| `deploy/huggingface/README.md` | Ficha del Space: metadatos, licencia CC BY-NC-SA 4.0 de los pesos y atribución |
-| `scripts/build-space.ps1` | Prepara `deploy/huggingface/build/` (no versionado), con solo el código necesario y el modelo de la última ejecución de entrenamiento |
-| `deploy/huggingface/publish.py` | Sube esa carpeta al Space |
-| `.github/workflows/deploy-frontend.yml` | Compila el frontend con la ruta `/dermai/` y la URL de la API, y lo publica en GitHub Pages |
-| `.github/workflows/ci.yml` | Integración continua: `ruff`, pytest (con PyTorch para CPU) y las pruebas, tipos y build del frontend |
+| `DERMAI_ANALYSIS_MODE=api` | Compilar en modo API, para usar un backend desplegado |
+| `DERMAI_API_URL` | URL de ese backend, p. ej. `https://…/api/v1` |
 
-## 3. Probar en local como en producción
+`.github/workflows/ci.yml` ejecuta el linting y todas las pruebas, incluidas las de paridad con Python, en cada `push` y *pull request*.
+
+### Probar en local como en Pages
 
 ```powershell
-# API: la misma imagen del Space, en http://127.0.0.1:7860
-powershell -ExecutionPolicy Bypass -File scripts\build-space.ps1
-docker build -t dermai-space:local deploy\huggingface\build
-docker run --rm -p 127.0.0.1:7860:7860 -e CORS_ORIGINS=http://127.0.0.1:4173 dermai-space:local
-```
-
-```powershell
-# Frontend: build de producción en http://127.0.0.1:4173/dermai/
 cd frontend
-$env:VITE_BASE_PATH = "/dermai/"; $env:VITE_API_BASE_URL = "http://127.0.0.1:7860/api/v1"
+$env:VITE_BASE_PATH = "/dermai/"; $env:VITE_ANALYSIS_MODE = "browser"
 npm run build
-npm run preview -- --base /dermai/
+npm run preview -- --base /dermai/   # http://127.0.0.1:4173/dermai/
 ```
 
-## 4. Publicar
+### Regenerar las referencias de paridad
 
-### GitHub (código y frontend)
-
-1. Crea el repositorio `dermai` en tu cuenta y sube el proyecto (rama `main`).
-2. En **Settings → Pages → Source**, elige **GitHub Actions**.
-3. Cada `push` a `main` que cambie `frontend/` publica la web. También puedes lanzarlo a mano desde **Actions → Desplegar frontend → Run workflow**.
-4. Opcional: si la API cambia de dirección, crea la variable `DERMAI_API_URL` en **Settings → Secrets and variables → Actions → Variables**.
-
-### Hugging Face (API)
+Si cambia la heurística de Python, hay que regenerar las referencias y ajustar el port hasta que las pruebas vuelvan a pasar:
 
 ```powershell
-# Una vez: herramienta de publicación e inicio de sesión con un token de permiso "write"
-.\backend\.venv\Scripts\python -m pip install huggingface_hub==2.4.0
-.\backend\.venv\Scripts\hf auth login
+.\backend\.venv\Scripts\python scripts\generate-browser-fixtures.py
+```
 
-# En cada publicación
+## 3. Desplegar también la API (opcional, no gratuito)
+
+El repositorio incluye todo lo necesario para desplegar el backend completo (heurística y modelo) como contenedor Docker:
+
+- **Imagen:** `deploy/huggingface/Dockerfile` y `start.sh`.
+- **Modo demo:** sesiones anónimas, borrado a las 6 h y límite de uso; ver [api.md](api.md).
+- **Scripts:** `scripts/build-space.ps1` y `deploy/huggingface/publish.py`.
+
+Ya **no hay una opción gratuita adecuada**:
+- Hugging Face exige desde 2026 una suscripción PRO para Spaces Docker.
+- Los planes gratuitos de otros proveedores ofrecen unos 512 MB de RAM, y PyTorch no cabe.
+
+Con PRO, o en un proveedor como Google Cloud Run (con tarjeta), se publica así:
+
+```powershell
+.\backend\.venv\Scripts\hf auth login
 powershell -ExecutionPolicy Bypass -File scripts\build-space.ps1
 .\backend\.venv\Scripts\python deploy\huggingface\publish.py
 ```
 
-- El token se crea en <https://huggingface.co/settings/tokens>.
-- El script crea el Space `Wilmer-FP/dermai` si no existe y sube la carpeta (unos 55 MB, incluido el modelo).
-- Hugging Face construye la imagen en unos 5–10 minutos. El estado se ve en la pestaña **Logs** del Space.
+Después, define `DERMAI_ANALYSIS_MODE=api` y `DERMAI_API_URL` en el repositorio.
 
-## 5. Límites del plan gratuito
+Para probar la imagen en local:
 
-| Límite | Consecuencia |
-|---|---|
-| El Space duerme tras un tiempo sin uso | La primera visita espera 1–2 minutos; la web lo indica y reintenta. |
-| Disco efímero | Al reiniciarse se pierden imágenes y análisis. Es intencionado en una demo con fotos de salud. |
-| CPU compartida (2 vCPU) | Suficiente para una demo; no para mucho tráfico. |
-| Límite en memoria | El límite de peticiones vive en un solo proceso y se reinicia con el Space. |
+```powershell
+docker build -t dermai-space:local deploy\huggingface\build
+docker run --rm -p 127.0.0.1:7860:7860 -e CORS_ORIGINS=http://127.0.0.1:4173 dermai-space:local
+```
 
-## 6. Seguridad y licencias
+## 4. Licencias
 
-- **Sin cuentas.** El identificador de sesión separa a los visitantes, pero no es una contraseña: quien lo copiara vería esas imágenes durante unas horas. Por eso se borran pronto y se pide no subir fotos identificables.
-- **Pesos del modelo.** Se publican en el Space con la licencia del dataset (CC BY-NC-SA 4.0, uso no comercial) y su atribución.
-- **Licencia del código.** Elígela antes de hacer público el repositorio.
-- **Secretos.** `.env` no se versiona y el Space no necesita secretos: toda su configuración es pública.
+- **Código:** MIT.
+- **OpenCV.js:** Apache 2.0; se distribuye como dependencia en el build.
+- **Pesos del modelo:** no se publican en la demo de Pages. Si se despliega la API, van con la licencia CC BY-NC-SA 4.0 del dataset y su atribución (`deploy/huggingface/README.md`).

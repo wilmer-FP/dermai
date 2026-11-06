@@ -10,6 +10,10 @@ export default defineConfig({
   // Ruta pública de la aplicación: "/" en local; "/dermai/" en GitHub Pages.
   base: process.env.VITE_BASE_PATH ?? "/",
   plugins: [react()],
+  build: {
+    // OpenCV.js (modo navegador) ocupa ≈15 MB sin comprimir y se carga aparte, solo al analizar.
+    chunkSizeWarningLimit: 16_000,
+  },
   server: {
     host: "127.0.0.1",
     port: 5173,
@@ -41,8 +45,8 @@ export default defineConfig({
     strictPort: true,
   },
   test: {
-    // Las pruebas usan siempre la URL relativa, aunque el entorno (p. ej. CI) defina otra.
-    env: { VITE_API_BASE_URL: "/api/v1" },
+    // Las pruebas usan siempre el modo API con la URL relativa, aunque el entorno (p. ej. CI) defina otra.
+    env: { VITE_API_BASE_URL: "/api/v1", VITE_ANALYSIS_MODE: "api" },
     environment: "jsdom",
     globals: true,
     setupFiles: ["./src/test/setup.ts"],
@@ -53,7 +57,7 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       include: ["src/**"],
-      exclude: ["src/**/*.test.*", "src/test/**", "src/main.tsx", "src/vite-env.d.ts"],
+      exclude: ["src/**/*.test.*", "src/test/**", "src/**/__fixtures__/**", "src/main.tsx", "src/vite-env.d.ts"],
       reporter: ["text-summary", "text"],
     },
   },

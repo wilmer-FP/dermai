@@ -11,6 +11,7 @@ export function Layout() {
   const apiHealth = useApiHealth();
   const demo = apiHealth.health?.demo_mode === true;
   const retention = apiHealth.health?.demo_retention_hours;
+  const browserMode = apiHealth.health?.analysis_mode === "browser";
 
   return (
     <div className="app">
@@ -51,6 +52,12 @@ export function Layout() {
           <aside className="notice" role="note" aria-label="Demo pública">
             <strong>Demo pública.</strong> Solo tú ves las imágenes que subes, y se borran automáticamente
             {retention ? ` a las ${formatHours(retention)} horas` : ""}. No subas fotos que identifiquen a nadie.
+          </aside>
+        )}
+        {browserMode && (
+          <aside className="notice" role="note" aria-label="Análisis en el navegador">
+            <strong>Análisis en tu navegador.</strong> Las fotos no se envían a ningún servidor: se analizan y se
+            guardan solo en este navegador. La primera vez se descarga OpenCV.js (unos 4 MB).
           </aside>
         )}
         {apiHealth.status === "waking" && (

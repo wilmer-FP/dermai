@@ -79,7 +79,28 @@ La clase roja no distingue granulación de eritema o inflamación. Por eso la in
 - `GET /analyses/{id}/processed-image` devuelve la visualización. Al borrar la imagen se borran también las procesadas.
 - El backend importa el paquete `ai` añadiendo la raíz del repositorio a `sys.path` (`backend/app/services/processing_service.py`).
 
-## 6. Pruebas
+## 6. Versión para el navegador
+
+`frontend/src/analysis/heuristic.ts` es un port del pipeline a **TypeScript + OpenCV.js 5.0**. Es el que usa la demo pública en GitHub Pages, sin servidor (ver [deployment.md](deployment.md)).
+
+Reproduce los mismos pasos, parámetros y redondeos:
+- `round()` de Python con redondeo al par;
+- truncamiento de `astype(uint8)`;
+- percentiles lineales de NumPy;
+- relleno de huecos con conectividad 4.
+
+**Paridad con Python.** `scripts/generate-browser-fixtures.py` genera imágenes de referencia con los resultados exactos de Python, y `heuristic.test.ts` las compara:
+
+| Imagen | Píxeles con la misma clase | Mayor diferencia en la composición |
+|---|---|---|
+| Herida de tres anillos | 99,998 % | 0,0001 |
+| Lesión pigmentada en piel oscura | 99,997 % | 0,0000 |
+| Lesión roja con vello y reflejos | 99,998 % | 0,0001 |
+| Imagen uniforme (respaldo) | 100 % | 0,0000 |
+
+Las pequeñas diferencias vienen de cálculos en coma flotante de 32 frente a 64 bits. Al decodificar la foto, el navegador aplica la orientación EXIF y reduce las imágenes de más de 2048 px antes del análisis.
+
+## 7. Pruebas
 
 `tests/ai/test_preprocessing.py` usa imágenes **sintéticas** de resultado conocido (`tests/ai/synthetic.py`), no imágenes clínicas:
 
@@ -94,7 +115,7 @@ La clase roja no distingue granulación de eritema o inflamación. Por eso la in
 .\backend\.venv\Scripts\python -m pytest tests/ai
 ```
 
-## 7. Limitaciones
+## 8. Limitaciones
 
 - Supone una lesión aproximadamente centrada y rodeada de piel. Las fotos muy cercanas, en las que la herida llena el encuadre, dan una referencia de piel poco fiable; en ese caso se emite un aviso.
 - Sombras, vendajes, marcadores, tatuajes o fondos que no son piel pueden segmentarse como lesión.

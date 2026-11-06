@@ -16,7 +16,7 @@ const CREDITS: { name: string; use: string; license: string; url: string }[] = [
     url: "https://pytorch.org/vision/stable/models/resnet.html",
   },
   { name: "PyTorch", use: "Entrenamiento e inferencia", license: "BSD-3-Clause", url: "https://pytorch.org" },
-  { name: "OpenCV", use: "Procesamiento de imágenes", license: "Apache 2.0", url: "https://opencv.org" },
+  { name: "OpenCV y OpenCV.js", use: "Procesamiento de imágenes (servidor y navegador)", license: "Apache 2.0", url: "https://opencv.org" },
   { name: "FastAPI", use: "API REST", license: "MIT", url: "https://fastapi.tiangolo.com" },
   { name: "React", use: "Interfaz web", license: "MIT", url: "https://react.dev" },
 ];
@@ -77,8 +77,8 @@ export function AboutPage() {
             <li>Al subir una foto se eliminan sus metadatos (EXIF, ubicación GPS, cámara y fecha).</li>
             <li>Las imágenes se guardan en el servidor local y puedes eliminarlas, junto con sus análisis, en cualquier momento.</li>
             <li>
-              En la demo pública, cada navegador solo ve sus propias imágenes (con un identificador anónimo, sin
-              cuentas) y se borran automáticamente a las pocas horas.
+              En la versión publicada en GitHub Pages, el análisis se hace en tu navegador con OpenCV.js: las fotos no
+              se envían a ningún servidor y se guardan solo en este navegador.
             </li>
             <li>
               El prototipo no tiene usuarios ni contraseñas: está pensado para ejecutarse en un equipo local, no para

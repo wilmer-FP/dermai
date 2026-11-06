@@ -27,7 +27,8 @@ Revisión de los riesgos éticos del prototipo y de cómo se abordan en el códi
 - **Consentimiento.** Antes de subir, el usuario confirma que la imagen no identifica a nadie y que tiene derecho a usarla.
 - **Control.** El usuario puede eliminar una imagen con todos sus análisis y archivos.
 - **Ámbito local.** Los datos se guardan en el equipo local (`storage/`, PostgreSQL en Docker) y se excluyen del control de versiones.
-- **Demo pública** ([deployment.md](deployment.md)):
+- **Demo pública en GitHub Pages** ([deployment.md](deployment.md)). El análisis se hace **en el navegador del visitante**: las fotos no se envían a ningún servidor y se guardan solo en ese navegador (IndexedDB). Es la opción más respetuosa con la privacidad.
+- **API desplegada con modo demo** (opcional):
   - cada navegador solo ve sus propias imágenes;
   - las imágenes se borran a las 6 horas y con cada reinicio del servidor;
   - hay un límite de uso por IP;

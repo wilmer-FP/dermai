@@ -39,6 +39,11 @@ DermAI es un **prototipo educativo y experimental**. Este documento reúne sus l
 - **Entorno de desarrollo.** La base de datos de desarrollo usa un usuario con privilegios de superusuario (comportamiento de la imagen oficial de PostgreSQL); no es apto para entornos compartidos.
 - **Plataforma.** Solo se ha probado en Windows 11 con Python 3.12, Node.js 24 y Docker Desktop.
 
+- **Demo pública (modo navegador):**
+  - Solo ofrece la heurística; el modelo de PyTorch requiere el backend.
+  - Los datos viven en IndexedDB del navegador: se pierden si el visitante borra los datos del sitio y no se comparten entre dispositivos.
+  - La primera vez descarga unos 4 MB de OpenCV.js.
+
 ## 6. Privacidad
 
 - Se eliminan los metadatos de las fotos (EXIF, GPS, texto en PNG), pero **el contenido de la imagen** puede identificar a una persona: rostro, tatuajes, documentos o fondo reconocible. La aplicación pide confirmación, pero no lo comprueba.

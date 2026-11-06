@@ -9,7 +9,11 @@ const LABELS: Record<Exclude<ApiHealthStatus, "online">, string> = {
 /** Indicador discreto de conexión con el backend (GET /health). */
 export function ApiStatus({ state }: { state: ApiHealthState }) {
   const { status } = state;
-  const label = status === "online" ? `API conectada · v${state.health?.version ?? "?"}` : LABELS[status];
+  const online =
+    state.health?.analysis_mode === "browser"
+      ? "Análisis local · OpenCV.js"
+      : `API conectada · v${state.health?.version ?? "?"}`;
+  const label = status === "online" ? online : LABELS[status];
   const tone = status === "online" ? "online" : status === "checking" ? "checking" : "offline";
 
   return (

@@ -18,6 +18,8 @@ export interface HealthResponse {
   /** Despliegue público: cada visitante solo ve sus imágenes y se borran solas. */
   demo_mode?: boolean;
   demo_retention_hours?: number | null;
+  /** "browser": el análisis se hace en el navegador y no hay servidor (GitHub Pages). */
+  analysis_mode?: "api" | "browser";
 }
 
 export interface ImageRead {

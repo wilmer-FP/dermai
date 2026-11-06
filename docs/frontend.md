@@ -26,7 +26,18 @@ Sirve para dar respuesta inmediata; el backend sigue siendo la autoridad y compr
 
 Si la subida funciona pero el registro del análisis falla, el reintento no vuelve a subir la imagen.
 
-## 3. Conexión con la API
+## 3. Modos: API o navegador
+
+`VITE_ANALYSIS_MODE` decide, al compilar, de dónde salen los datos (`src/services/api.ts`):
+
+- **`api`** (por defecto): llama a la API REST del backend (§4).
+- **`browser`**: usa `src/services/localBackend.ts`, que implementa las mismas operaciones sin servidor.
+  - El análisis lo hace la heurística portada a TypeScript (`src/analysis/`) con OpenCV.js, que se carga la primera vez que se analiza.
+  - Imágenes, análisis e imágenes procesadas se guardan en **IndexedDB** (`src/services/localStore.ts`).
+  - Las imágenes se muestran con URLs `blob:` (`useImageSource`).
+  - Es el modo de la demo en GitHub Pages; ver [deployment.md](deployment.md).
+
+## 4. Conexión con la API
 
 En desarrollo, el servidor de Vite (`127.0.0.1:5173`) reenvía `/api` al backend, así que el navegador trabaja con un solo origen y no depende de CORS. Si el backend no responde, el proxy devuelve un `502` con un `detail` explicativo, y la interfaz lo muestra.
 
@@ -38,7 +49,7 @@ En desarrollo, el servidor de Vite (`127.0.0.1:5173`) reenvía `/api` al backend
 
 Los errores de la API (`{"detail": ...}`) se convierten en `ApiError` con el código HTTP y un mensaje en español listo para mostrar. Los fallos de red tienen `status = 0`.
 
-## 4. Organización del código
+## 5. Organización del código
 
 ```
 frontend/
@@ -61,7 +72,7 @@ frontend/
 
 Las pruebas (`*.test.ts(x)`) están junto al código que prueban. Usan Vitest, Testing Library y jsdom. Las de páginas renderizan la aplicación completa con un router en memoria y sustituyen el cliente de la API por dobles.
 
-## 5. Comandos
+## 6. Comandos
 
 Desde `frontend/`:
 
@@ -74,7 +85,7 @@ Desde `frontend/`:
 | `npm run typecheck` | Comprueba los tipos. |
 | `npm run build` | Genera la versión de producción en `frontend/dist/`. |
 
-## 6. Accesibilidad y diseño
+## 7. Accesibilidad y diseño
 
 - Navegación por teclado (enlace para saltar al contenido, foco visible, zona de carga accesible como `<label>`).
 - Roles ARIA para avisos (`note`), errores (`alert`) y estados de carga (`status`).

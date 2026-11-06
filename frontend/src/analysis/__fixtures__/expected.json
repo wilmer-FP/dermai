@@ -1,0 +1,414 @@
+{
+  "wound": {
+    "width": 320,
+    "height": 240,
+    "labels_shape": [
+      384,
+      512
+    ],
+    "necrotic_area_ratio": 0.1265,
+    "result": {
+      "method": {
+        "name": "dermai-opencv-heuristic",
+        "version": "0.1.0",
+        "description": "Segmentación por diferencia de color con la piel circundante y clasificación de tejido por umbrales en CIELAB. Método heurístico sin validación clínica."
+      },
+      "preprocessing": {
+        "original_size": [
+          320,
+          240
+        ],
+        "processed_size": [
+          512,
+          384
+        ],
+        "color_constancy": "shades_of_gray(p=6, strength=0.5)",
+        "denoising": "bilateral"
+      },
+      "segmentation": {
+        "roi_area_ratio": 0.2886,
+        "fallback_full_image": false,
+        "border_contact": 0.0,
+        "threshold_delta_e": 21.0243
+      },
+      "tissue_composition": {
+        "necrotic": 0.1265,
+        "slough": 0.295,
+        "granulation": 0.5763,
+        "other": 0.0021
+      },
+      "color": {
+        "lesion_lab_mean": [
+          50.308,
+          20.4499,
+          25.619
+        ],
+        "lesion_lab_std": [
+          21.8314,
+          25.9123,
+          17.4405
+        ],
+        "lesion_chroma_mean": 42.515,
+        "skin_reference_lab": [
+          72.3328,
+          6.9688,
+          6.4688
+        ],
+        "delta_e_to_skin_mean": 49.5607
+      },
+      "texture": {
+        "contrast": 4.1898,
+        "homogeneity": 0.7293,
+        "energy": 0.2644,
+        "correlation": 0.9767,
+        "entropy": 4.6693,
+        "laplacian_variance": 355.5283
+      },
+      "edges": {
+        "edge_density": 0.0253,
+        "gradient_mean": 26.4798,
+        "border_gradient_mean": 164.6473
+      },
+      "shape": {
+        "area_ratio": 0.2886,
+        "perimeter_px": 909.8204,
+        "circularity": 0.8555,
+        "solidity": 0.9956,
+        "eccentricity": 0.7129,
+        "aspect_ratio": 1.4267
+      },
+      "quality": {
+        "lightness_mean": 65.9462,
+        "lightness_std": 15.4149,
+        "sharpness": 163.9793,
+        "glare_ratio": 0.0
+      },
+      "warnings": [],
+      "legend": [
+        {
+          "label": "Región analizada",
+          "color": "#50dc50",
+          "kind": "outline"
+        },
+        {
+          "label": "Negro / marrón oscuro",
+          "color": "#ff00ff",
+          "kind": "fill"
+        },
+        {
+          "label": "Amarillo",
+          "color": "#ffd700",
+          "kind": "fill"
+        }
+      ]
+    }
+  },
+  "dark_skin": {
+    "width": 320,
+    "height": 240,
+    "labels_shape": [
+      384,
+      512
+    ],
+    "necrotic_area_ratio": 0.0,
+    "result": {
+      "method": {
+        "name": "dermai-opencv-heuristic",
+        "version": "0.1.0",
+        "description": "Segmentación por diferencia de color con la piel circundante y clasificación de tejido por umbrales en CIELAB. Método heurístico sin validación clínica."
+      },
+      "preprocessing": {
+        "original_size": [
+          320,
+          240
+        ],
+        "processed_size": [
+          512,
+          384
+        ],
+        "color_constancy": "shades_of_gray(p=6, strength=0.5)",
+        "denoising": "bilateral"
+      },
+      "segmentation": {
+        "roi_area_ratio": 0.2593,
+        "fallback_full_image": false,
+        "border_contact": 0.0,
+        "threshold_delta_e": 8.0
+      },
+      "tissue_composition": {
+        "necrotic": 0.0,
+        "slough": 0.0,
+        "granulation": 0.0,
+        "other": 1.0
+      },
+      "color": {
+        "lesion_lab_mean": [
+          24.4733,
+          2.8363,
+          3.1109
+        ],
+        "lesion_lab_std": [
+          0.5992,
+          1.46,
+          1.6004
+        ],
+        "lesion_chroma_mean": 4.6177,
+        "skin_reference_lab": [
+          34.3445,
+          5.2031,
+          9.75
+        ],
+        "delta_e_to_skin_mean": 12.2953
+      },
+      "texture": {
+        "contrast": 56.452,
+        "homogeneity": 0.2723,
+        "energy": 0.0844,
+        "correlation": 0.4183,
+        "entropy": 7.4784,
+        "laplacian_variance": 62.8015
+      },
+      "edges": {
+        "edge_density": 0.0,
+        "gradient_mean": 9.1434,
+        "border_gradient_mean": 9.1669
+      },
+      "shape": {
+        "area_ratio": 0.2593,
+        "perimeter_px": 877.6783,
+        "circularity": 0.8256,
+        "solidity": 0.9876,
+        "eccentricity": 0.7252,
+        "aspect_ratio": 1.4513
+      },
+      "quality": {
+        "lightness_mean": 31.4922,
+        "lightness_std": 4.4868,
+        "sharpness": 64.5122,
+        "glare_ratio": 0.0
+      },
+      "warnings": [],
+      "legend": [
+        {
+          "label": "Región analizada",
+          "color": "#50dc50",
+          "kind": "outline"
+        },
+        {
+          "label": "Negro / marrón oscuro",
+          "color": "#ff00ff",
+          "kind": "fill"
+        },
+        {
+          "label": "Amarillo",
+          "color": "#ffd700",
+          "kind": "fill"
+        }
+      ]
+    }
+  },
+  "red_lesion": {
+    "width": 320,
+    "height": 240,
+    "labels_shape": [
+      384,
+      512
+    ],
+    "necrotic_area_ratio": 0.0,
+    "result": {
+      "method": {
+        "name": "dermai-opencv-heuristic",
+        "version": "0.1.0",
+        "description": "Segmentación por diferencia de color con la piel circundante y clasificación de tejido por umbrales en CIELAB. Método heurístico sin validación clínica."
+      },
+      "preprocessing": {
+        "original_size": [
+          320,
+          240
+        ],
+        "processed_size": [
+          512,
+          384
+        ],
+        "color_constancy": "shades_of_gray(p=6, strength=0.5)",
+        "denoising": "bilateral"
+      },
+      "segmentation": {
+        "roi_area_ratio": 0.3422,
+        "fallback_full_image": false,
+        "border_contact": 0.0,
+        "threshold_delta_e": 20.2553
+      },
+      "tissue_composition": {
+        "necrotic": 0.0,
+        "slough": 0.0,
+        "granulation": 0.9607,
+        "other": 0.0393
+      },
+      "color": {
+        "lesion_lab_mean": [
+          42.5866,
+          39.6513,
+          17.1949
+        ],
+        "lesion_lab_std": [
+          6.901,
+          7.5575,
+          3.6571
+        ],
+        "lesion_chroma_mean": 43.2894,
+        "skin_reference_lab": [
+          72.8821,
+          4.8594,
+          7.9375
+        ],
+        "delta_e_to_skin_mean": 48.108
+      },
+      "texture": {
+        "contrast": 17.302,
+        "homogeneity": 0.6264,
+        "energy": 0.3043,
+        "correlation": 0.6114,
+        "entropy": 4.8795,
+        "laplacian_variance": 601.8413
+      },
+      "edges": {
+        "edge_density": 0.0644,
+        "gradient_mean": 29.085,
+        "border_gradient_mean": 211.6822
+      },
+      "shape": {
+        "area_ratio": 0.3422,
+        "perimeter_px": 990.7321,
+        "circularity": 0.8559,
+        "solidity": 0.9958,
+        "eccentricity": 0.7285,
+        "aspect_ratio": 1.4648
+      },
+      "quality": {
+        "lightness_mean": 62.2886,
+        "lightness_std": 15.3847,
+        "sharpness": 495.0239,
+        "glare_ratio": 0.0027
+      },
+      "warnings": [],
+      "legend": [
+        {
+          "label": "Región analizada",
+          "color": "#50dc50",
+          "kind": "outline"
+        },
+        {
+          "label": "Negro / marrón oscuro",
+          "color": "#ff00ff",
+          "kind": "fill"
+        },
+        {
+          "label": "Amarillo",
+          "color": "#ffd700",
+          "kind": "fill"
+        }
+      ]
+    }
+  },
+  "uniform": {
+    "width": 320,
+    "height": 240,
+    "labels_shape": [
+      384,
+      512
+    ],
+    "necrotic_area_ratio": 0.0,
+    "result": {
+      "method": {
+        "name": "dermai-opencv-heuristic",
+        "version": "0.1.0",
+        "description": "Segmentación por diferencia de color con la piel circundante y clasificación de tejido por umbrales en CIELAB. Método heurístico sin validación clínica."
+      },
+      "preprocessing": {
+        "original_size": [
+          320,
+          240
+        ],
+        "processed_size": [
+          512,
+          384
+        ],
+        "color_constancy": "shades_of_gray(p=6, strength=0.5)",
+        "denoising": "bilateral"
+      },
+      "segmentation": {
+        "roi_area_ratio": 1.0,
+        "fallback_full_image": true,
+        "border_contact": 1.0,
+        "threshold_delta_e": null
+      },
+      "tissue_composition": {
+        "necrotic": 0.0,
+        "slough": 0.0,
+        "granulation": 0.0,
+        "other": 1.0
+      },
+      "color": {
+        "lesion_lab_mean": [
+          72.7141,
+          5.8362,
+          8.4061
+        ],
+        "lesion_lab_std": [
+          0.1748,
+          0.4282,
+          0.4208
+        ],
+        "lesion_chroma_mean": 10.2472,
+        "skin_reference_lab": [
+          72.7112,
+          5.7344,
+          8.375
+        ],
+        "delta_e_to_skin_mean": 0.5635
+      },
+      "texture": {
+        "contrast": 64.5327,
+        "homogeneity": 0.402,
+        "energy": 0.2565,
+        "correlation": 0.3892,
+        "entropy": 4.3179,
+        "laplacian_variance": 8.4726
+      },
+      "edges": {
+        "edge_density": 0.0,
+        "gradient_mean": 3.0528,
+        "border_gradient_mean": null
+      },
+      "shape": null,
+      "quality": {
+        "lightness_mean": 72.7141,
+        "lightness_std": 0.1748,
+        "sharpness": 8.4726,
+        "glare_ratio": 0.0
+      },
+      "warnings": [
+        "No se distinguió una lesión del fondo; se analizó la imagen completa.",
+        "La imagen parece desenfocada."
+      ],
+      "legend": [
+        {
+          "label": "Región analizada",
+          "color": "#50dc50",
+          "kind": "outline"
+        },
+        {
+          "label": "Negro / marrón oscuro",
+          "color": "#ff00ff",
+          "kind": "fill"
+        },
+        {
+          "label": "Amarillo",
+          "color": "#ffd700",
+          "kind": "fill"
+        }
+      ]
+    }
+  }
+}

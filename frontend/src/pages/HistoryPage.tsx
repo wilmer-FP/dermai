@@ -3,11 +3,21 @@ import { EmptyState, ErrorMessage, Loading } from "../components/Feedback";
 import { Pagination } from "../components/Pagination";
 import { StatusBadge } from "../components/StatusBadge";
 import { useAsync } from "../hooks/useAsync";
-import { imageFileUrl, listAnalyses } from "../services/api";
+import { useImageSource } from "../hooks/useImageSource";
+import { listAnalyses } from "../services/api";
 import { STATUS_LABELS, formatDate, formatRatio, shortId } from "../services/format";
 import { ANALYSIS_STATUSES, type AnalysisStatus } from "../types/api";
 
 export const HISTORY_PAGE_SIZE = 10;
+
+function Thumbnail({ imageId }: { imageId: string }) {
+  const src = useImageSource("original", imageId);
+  return src ? (
+    <img src={src} alt="" className="history-item__thumb" loading="lazy" />
+  ) : (
+    <span className="history-item__thumb" aria-hidden="true" />
+  );
+}
 
 function parseStatus(value: string | null): AnalysisStatus | undefined {
   return ANALYSIS_STATUSES.find((status) => status === value);
@@ -85,12 +95,7 @@ export function HistoryPage() {
             {data.items.map((analysis) => (
               <li key={analysis.id}>
                 <Link to={`/analyses/${analysis.id}`} className="history-item">
-                  <img
-                    src={imageFileUrl(analysis.image_id)}
-                    alt=""
-                    className="history-item__thumb"
-                    loading="lazy"
-                  />
+                  <Thumbnail imageId={analysis.image_id} />
                   <div className="history-item__body">
                     <p className="history-item__title">
                       Análisis <code>{shortId(analysis.id)}</code>

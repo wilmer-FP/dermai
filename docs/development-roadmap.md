@@ -12,7 +12,7 @@ Cada etapa se revisa y aprueba antes de avanzar a la siguiente.
 | 6 | Procesamiento de imágenes | ✅ Completada |
 | 7 | Investigación e integración del modelo experimental | ✅ Completada |
 | 8 | Pruebas y documentación | ✅ Completada |
-| 9 | Despliegue gratuito (demo pública) | 🟡 En curso |
+| 9 | Despliegue gratuito (demo pública) | 🟡 En revisión |
 
 Las 8 etapas del plan original se cerraron el 5 de noviembre de 2026. La Etapa 9 se añadió después para publicar una demo.
 
@@ -100,4 +100,9 @@ Las 8 etapas del plan original se cerraron el 5 de noviembre de 2026. La Etapa 9
   - **Frontend:** ruta base `/dermai/` y reintentos mientras el servidor despierta.
   - **GitHub Actions:** CI y despliegue en Pages.
   - **Pruebas:** 19 nuevas (213 en total).
-- **Pendiente:** publicar el repositorio y el Space; requiere tu aprobación y tus credenciales.
+- **Publicado:** repositorio <https://github.com/wilmer-FP/dermai> (MIT) y web <https://wilmer-fp.github.io/dermai/>.
+- **Cambio de plan.** Hugging Face pasó a exigir PRO para Spaces Docker, así que la API no se publicó. En su lugar, la demo analiza **en el navegador**:
+  - la heurística se portó a TypeScript + OpenCV.js, con paridad del 99,997–100 % de píxeles frente a Python;
+  - los datos van en IndexedDB y las fotos no salen del dispositivo;
+  - 30 pruebas nuevas, 243 en total.
+- El despliegue de la API (Docker, modo demo) queda preparado como opción de pago.

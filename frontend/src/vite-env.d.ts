@@ -5,6 +5,8 @@ interface ImportMetaEnv {
   readonly VITE_API_BASE_URL?: string;
   /** Tamaño máximo de subida en MB; debe coincidir con MAX_UPLOAD_SIZE_MB del backend. */
   readonly VITE_MAX_UPLOAD_SIZE_MB?: string;
+  /** "browser": análisis en el navegador (OpenCV.js + IndexedDB), sin backend. Por defecto, "api". */
+  readonly VITE_ANALYSIS_MODE?: string;
 }
 
 interface ImportMeta {

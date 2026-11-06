@@ -805,6 +805,16 @@ img {
   background: var(--surface-muted);
 }
 
+.figure__placeholder {
+  display: grid;
+  place-items: center;
+  min-height: 200px;
+  border-radius: var(--radius-small);
+  background: var(--surface-muted);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
 .figure figcaption {
   display: grid;
   gap: 0.5rem;
