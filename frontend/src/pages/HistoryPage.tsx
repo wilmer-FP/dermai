@@ -101,6 +101,7 @@ export function HistoryPage() {
                       Análisis <code>{shortId(analysis.id)}</code>
                     </p>
                     <p className="muted small">{formatDate(analysis.created_at)}</p>
+                    <p className="muted small">{analysis.model_version_id ? "Modelo entrenado" : "Heurística de OpenCV"}</p>
                   </div>
                   <div className="history-item__meta">
                     <StatusBadge status={analysis.status} />

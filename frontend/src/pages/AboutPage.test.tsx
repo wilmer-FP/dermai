@@ -19,7 +19,7 @@ describe("AboutPage", () => {
     expect(await screen.findByRole("heading", { name: "Acerca de DermAI" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Qué hace y qué no hace" })).toBeInTheDocument();
     expect(screen.getByText(/se eliminan sus metadatos/)).toBeInTheDocument();
-    expect(screen.getByText(/no para\s+publicarse en internet/)).toBeInTheDocument();
+    expect(screen.getByText(/versión con servidor requiere medidas de protección/)).toBeInTheDocument();
   });
 
   it("atribuye el dataset con su licencia y enlace", async () => {

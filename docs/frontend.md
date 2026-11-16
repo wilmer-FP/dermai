@@ -32,7 +32,7 @@ Si la subida funciona pero el registro del análisis falla, el reintento no vuel
 
 - **`api`** (por defecto): llama a la API REST del backend (§4).
 - **`browser`**: usa `src/services/localBackend.ts`, que implementa las mismas operaciones sin servidor.
-  - El análisis lo hace la heurística portada a TypeScript (`src/analysis/`) con OpenCV.js, que se carga la primera vez que se analiza.
+  - Permite elegir el modelo entrenado ONNX Runtime Web (`src/analysis/model.ts`, en worker) o la heurística OpenCV.js. Cada resultado e historial identifican el método; los fallos del modelo no ejecutan la heurística.
   - Imágenes, análisis e imágenes procesadas se guardan en **IndexedDB** (`src/services/localStore.ts`).
   - Las imágenes se muestran con URLs `blob:` (`useImageSource`).
   - Es el modo de la demo en GitHub Pages; ver [deployment.md](deployment.md).

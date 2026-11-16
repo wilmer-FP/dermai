@@ -2,7 +2,7 @@
   "name": "dermai-frontend",
   "private": true,
   "version": "0.1.0",
-  "description": "Interfaz web de DermAI (prototipo experimental, no diagnóstico).",
+  "description": "Interfaz web de DermAI (prototipo experimental, no diagn\u00c3\u00b3stico).",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,10 +11,12 @@
     "typecheck": "tsc -b",
     "test": "vitest run",
     "test:watch": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "prebuild": "node scripts/check-model.mjs"
   },
   "dependencies": {
     "@techstark/opencv-js": "^5.0.0-release.1",
+    "onnxruntime-web": "1.31.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router": "^7.6.2"

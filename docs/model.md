@@ -116,7 +116,7 @@ Ejecución `20261105T231652Z_unet-resnet18-woundtissue`:
 - **Datos insuficientes.** Con 13 imágenes (solo 2 con necrosis), cualquier métrica tiene intervalos de confianza enormes. El modelo es una demostración técnica del flujo completo, no un modelo útil.
 - **Cambio de dominio.** Las imágenes de WoundTissue son recortes ajustados de heridas; fotos con mucha piel sana, fondo o lesiones que no son heridas (p. ej. eritemas) quedan fuera de su distribución.
 - **Sin evaluación de sesgos** por tono de piel, cámara o iluminación.
-- **Licencia.** WoundTissue es CC BY-NC-SA 4.0. El modelo derivado solo puede usarse con fines no comerciales y, si se distribuye, con la misma licencia. Por eso los pesos no se versionan.
+- **Licencia.** WoundTissue es CC BY-NC-SA 4.0. El modelo se distribuye con esa licencia y atribución. El ONNX verificado está en `frontend/public/models/dermai/`; otros checkpoints y el dataset permanecen excluidos. Exportación y paridad documentadas en [deployment.md](deployment.md).
 - **Para reentrenar con más datos** (por ejemplo, el dataset completo si los autores lo facilitan), basta con apuntar `data_root` a carpetas `image/` y `label/` con el mismo formato y cambiar `version` en la configuración.
 
 ## 7. Referencias

@@ -57,7 +57,8 @@ export function Layout() {
         {browserMode && (
           <aside className="notice" role="note" aria-label="Análisis en el navegador">
             <strong>Análisis en tu navegador.</strong> Las fotos no se envían a ningún servidor: se analizan y se
-            guardan solo en este navegador. La primera vez se descarga OpenCV.js (unos 4 MB).
+            guardan solo en este navegador. Puedes elegir la heurística o el modelo entrenado real
+            (descarga de 55 MiB más los motores de procesamiento). No hay sustitución automática entre métodos.
           </aside>
         )}
         {apiHealth.status === "waking" && (

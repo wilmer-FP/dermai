@@ -10,6 +10,7 @@ export default defineConfig({
   // Ruta pública de la aplicación: "/" en local; "/dermai/" en GitHub Pages.
   base: process.env.VITE_BASE_PATH ?? "/",
   plugins: [react()],
+  worker: { format: "es" },
   build: {
     // OpenCV.js (modo navegador) ocupa ≈15 MB sin comprimir y se carga aparte, solo al analizar.
     chunkSizeWarningLimit: 16_000,

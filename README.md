@@ -4,7 +4,7 @@
 
 > ⚠️ **Advertencia:** DermAI es un prototipo con fines **educativos y experimentales**. **No es una herramienta de diagnóstico médico**, no ha sido validado clínicamente y no sustituye la evaluación de profesionales sanitarios. Ningún resultado generado por el sistema debe usarse para tomar decisiones clínicas.
 
-**Demo en línea:** <https://wilmer-fp.github.io/dermai/>. El análisis se hace **en tu navegador** con OpenCV.js y las fotos no se envían a ningún servidor.
+**URL de despliegue:** <https://wilmer-fp.github.io/dermai/>. El modo navegador permite elegir el **modelo entrenado real (ONNX Runtime Web)** o la heurística OpenCV.js. Las fotos no se envían a ningún servidor. Publicación y verificación: [docs/deployment.md](docs/deployment.md).
 
 ---
 
@@ -27,7 +27,7 @@ La valoración visual de lesiones cutáneas, en particular la identificación de
 - **Historial** paginado y filtrable, reanálisis y borrado completo de una imagen con sus análisis.
 - **Dos modos de ejecución:**
   - con servidor (API FastAPI);
-  - todo en el navegador, con la heurística portada a TypeScript + OpenCV.js y los datos en IndexedDB. Es el modo que usa la demo pública.
+  - todo en el navegador, con el modelo entrenado exportado a ONNX o la heurística TypeScript + OpenCV.js, y los datos en IndexedDB. No hay sustitución automática de métodos.
 - **Entrenamiento reproducible:**
   - Se registran configuración, versiones, semilla y hashes de los datos.
   - Validación cruzada y comparación con la heurística.
@@ -122,7 +122,7 @@ npm run dev --prefix frontend
 powershell -ExecutionPolicy Bypass -File scripts\test-all.ps1
 ```
 
-**243 pruebas automáticas** (107 del backend, 42 de procesamiento y modelo, 94 del frontend). Incluyen:
+**249 pruebas automáticas** (107 del backend, 42 de procesamiento y modelo, 100 del frontend). Incluyen:
 - integración con PostgreSQL;
 - un entrenamiento completo en miniatura;
 - **paridad del análisis en el navegador con Python** (≥ 99,99 % de píxeles iguales);
@@ -162,9 +162,9 @@ Detalle en [docs/ethics.md](docs/ethics.md) y [docs/limitations.md](docs/limitat
 ## Licencia
 
 - **Código:** [MIT](LICENSE).
-- **Dataset WoundTissue y pesos del modelo:** quedan fuera; se rigen por CC BY-NC-SA 4.0 (uso no comercial) y no están en este repositorio.
+- **Dataset WoundTissue y pesos del modelo:** CC BY-NC-SA 4.0 (uso no comercial), separados de la licencia MIT. El dataset no se distribuye. El ONNX verificado se incluye con su [licencia y atribución](frontend/public/models/dermai/NOTICE.md); otros checkpoints permanecen excluidos.
 
 ## Créditos
 
 - Dataset **WoundTissue**: M. A. Kabir, N. Roy, M. E. Hossain, J. Featherston y S. Ahmed, *Deep Learning for Wound Tissue Segmentation: A Comprehensive Evaluation using A Novel Dataset*, arXiv:2502.10652, 2025. Licencia CC BY-NC-SA 4.0: el modelo entrenado con él solo puede usarse con fines no comerciales.
-- Pesos de ResNet-18 en ImageNet (torchvision, BSD-3-Clause). PyTorch (BSD-3-Clause), OpenCV (Apache 2.0), FastAPI (MIT), React (MIT).
+- Encoder inicial ResNet-18 de torchvision. Código PyTorch/torchvision (BSD-3-Clause), ONNX Runtime (MIT), OpenCV (Apache 2.0), FastAPI (MIT), React (MIT). La licencia de código torchvision no concede derechos sobre imágenes de ImageNet; véase su aviso oficial y `NOTICE.md` del modelo.

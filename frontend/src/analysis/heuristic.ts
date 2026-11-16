@@ -57,13 +57,13 @@ export function pyRound(value: number): number {
   return Math.round(value);
 }
 
-function roundTo(value: number, digits = 4): number {
+export function roundTo(value: number, digits = 4): number {
   const factor = 10 ** digits;
   return Math.round(value * factor) / factor;
 }
 
 /** Redondea recursivamente los números a 4 decimales, como _round() en Python. */
-function roundDeep(value: unknown): unknown {
+export function roundDeep(value: unknown): unknown {
   if (typeof value === "number") return Number.isInteger(value) ? value : roundTo(value);
   if (Array.isArray(value)) return value.map(roundDeep);
   if (value && typeof value === "object") {
@@ -72,20 +72,20 @@ function roundDeep(value: unknown): unknown {
   return value;
 }
 
-function mean(values: ArrayLike<number>): number {
+export function mean(values: ArrayLike<number>): number {
   let sum = 0;
   for (let i = 0; i < values.length; i++) sum += values[i];
   return values.length ? sum / values.length : 0;
 }
 
-function std(values: ArrayLike<number>, average = mean(values)): number {
+export function std(values: ArrayLike<number>, average = mean(values)): number {
   let sum = 0;
   for (let i = 0; i < values.length; i++) sum += (values[i] - average) ** 2;
   return values.length ? Math.sqrt(sum / values.length) : 0;
 }
 
 /** Mediana de NumPy (media de los dos centrales si el número es par). */
-function median(values: Float64Array | number[]): number {
+export function median(values: Float64Array | number[]): number {
   const sorted = Float64Array.from(values).sort();
   const n = sorted.length;
   if (!n) return 0;
@@ -108,7 +108,7 @@ function oddSize(value: number, minimum: number): number {
 
 // ---------- Gestión de memoria de OpenCV.js ----------
 
-class MatScope {
+export class MatScope {
   private mats: { delete(): void }[] = [];
   add<T extends { delete(): void }>(mat: T): T {
     this.mats.push(mat);
@@ -187,7 +187,7 @@ interface Preprocessed {
   glare: Uint8Array;
 }
 
-function preprocess(cv: Cv, scope: MatScope, input: RgbImage, config: PipelineConfig): Preprocessed {
+export function preprocess(cv: Cv, scope: MatScope, input: RgbImage, config: PipelineConfig): Preprocessed {
   const src = scope.add(cv.matFromArray(input.height, input.width, cv.CV_8UC3, input.data));
   const resized = resizeLongestSide(cv, scope, src, config.target_size);
   const width = resized.cols;
@@ -431,7 +431,7 @@ function classifyTissue(
 
 // ---------- Características ----------
 
-function colorFeatures(lab: Float32Array, region: Uint8Array, skin: [number, number, number]) {
+export function colorFeatures(lab: Float32Array, region: Uint8Array, skin: [number, number, number]) {
   const values: number[][] = [[], [], []];
   const chroma: number[] = [];
   const deltaE: number[] = [];
@@ -531,19 +531,19 @@ export function glcmFeatures(gray: Uint8Array, region: Uint8Array, width: number
   return Object.fromEntries(names.map((name) => [name, used ? accumulated[name] / used : 0])) as typeof zeros;
 }
 
-function laplacianValues(cv: Cv, scope: MatScope, grayMat: Cv): Float64Array {
+export function laplacianValues(cv: Cv, scope: MatScope, grayMat: Cv): Float64Array {
   const lap = scope.add(new cv.Mat());
   cv.Laplacian(grayMat, lap, cv.CV_64F);
   return Float64Array.from(lap.data64F as Float64Array);
 }
 
-function selectValues(values: ArrayLike<number>, mask: Uint8Array): number[] {
+export function selectValues(values: ArrayLike<number>, mask: Uint8Array): number[] {
   const out: number[] = [];
   for (let i = 0; i < mask.length; i++) if (mask[i]) out.push(values[i]);
   return out;
 }
 
-function edgeFeatures(cv: Cv, scope: MatScope, pre: Preprocessed, region: Uint8Array, roiIsLesion: boolean) {
+export function edgeFeatures(cv: Cv, scope: MatScope, pre: Preprocessed, region: Uint8Array, roiIsLesion: boolean) {
   const { width, height } = pre;
   const blurred = scope.add(new cv.Mat());
   cv.GaussianBlur(pre.grayMat, blurred, new cv.Size(0, 0), 1.0, 1.0);
@@ -609,7 +609,7 @@ function largestContour(cv: Cv, scope: MatScope, mask: Uint8Array, width: number
   return { contours, best };
 }
 
-function shapeFeatures(cv: Cv, scope: MatScope, roi: Uint8Array, width: number, height: number) {
+export function shapeFeatures(cv: Cv, scope: MatScope, roi: Uint8Array, width: number, height: number) {
   const { best: contour } = largestContour(cv, scope, roi, width, height);
   const area: number = cv.contourArea(contour);
   const perimeter: number = cv.arcLength(contour, true);
@@ -642,7 +642,7 @@ function shapeFeatures(cv: Cv, scope: MatScope, roi: Uint8Array, width: number, 
   };
 }
 
-function variance(values: ArrayLike<number>): number {
+export function variance(values: ArrayLike<number>): number {
   return std(values) ** 2;
 }
 

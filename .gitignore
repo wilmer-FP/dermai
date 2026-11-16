@@ -105,3 +105,6 @@ desktop.ini
 .vscode/*
 !.vscode/extensions.json
 .idea/
+
+# Audited browser model only; all other weights remain private/ignored.
+!frontend/public/models/dermai/model.onnx

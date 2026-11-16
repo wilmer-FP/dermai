@@ -97,5 +97,13 @@ El **modo navegador** se probó con el build de producción en un navegador real
 ## 5. Lo que no está cubierto
 
 - **Navegadores:** no hay pruebas automáticas en un navegador real (p. ej. Playwright); la interfaz se verificó a mano.
-- **Rendimiento:** no hay pruebas de rendimiento ni de carga; los análisis son síncronos.
+- **Rendimiento:** hay mediciones de PyTorch/ONNX CPU y WASM en Node y una prueba local en navegador; ver [deployment.md](deployment.md). No equivalen a mediciones de móviles, concurrencia o memoria aislada del navegador.
 - **Validez clínica:** las pruebas comprueban que el software hace lo que dice, **no** que sus resultados sean clínicamente correctos. Ver [limitations.md](limitations.md).
+## 6. Modelo entrenado en navegador (16-11-2026)
+
+El frontend tiene ahora 100 pruebas: cuatro nuevas de paridad completa ONNX Runtime
+Web/OpenCV.js contra referencias PyTorch y dos de identidad del modelo, historial,
+borrado y fallo explícito sin heurística. El exportador prueba además ocho entradas
+contra ONNX CPU, registra hashes y genera referencias sintéticas. El protocolo,
+resultados medidos y límites de la comprobación visual están en [deployment.md](deployment.md).
+Las referencias no contienen fotografías clínicas.

@@ -26,9 +26,9 @@ This license covers the source code of DermAI. It does NOT cover:
 
 - The WoundTissue dataset (Kabir et al., 2025), licensed under CC BY-NC-SA 4.0.
   It is not included in this repository.
-- Model weights trained on that dataset, which are derivative works distributed
-  only under CC BY-NC-SA 4.0 (non-commercial use). They are not included in this
-  repository.
+- Model weights trained on that dataset, distributed under CC BY-NC-SA 4.0
+  (non-commercial use). The verified ONNX model is included under
+  frontend/public/models/dermai/, with its own LICENSE.txt and NOTICE.md.
 
 DermAI is an educational, experimental prototype. It is not a medical device and
 must not be used for diagnosis or clinical decisions.

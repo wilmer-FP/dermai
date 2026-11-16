@@ -164,6 +164,6 @@ export function processedImageUrl(analysisId: string): string {
 // ---------- Versiones de modelo ----------
 
 export async function listModelVersions(activeOnly = false): Promise<ModelVersionRead[]> {
-  if (isBrowserMode()) return [];
+  if (isBrowserMode()) return (await local()).listModelVersions();
   return request(`/model-versions${buildQuery({ active_only: activeOnly || undefined })}`);
 }

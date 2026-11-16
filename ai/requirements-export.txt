@@ -1,0 +1,4 @@
+# Install alongside backend/requirements-dev.txt and ai/requirements.txt.
+onnx==1.23.2
+onnxruntime==1.32.0
+psutil==7.2.2

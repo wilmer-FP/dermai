@@ -11,7 +11,7 @@ export function ApiStatus({ state }: { state: ApiHealthState }) {
   const { status } = state;
   const online =
     state.health?.analysis_mode === "browser"
-      ? "Análisis local · OpenCV.js"
+      ? "Análisis local · ONNX / OpenCV.js"
       : `API conectada · v${state.health?.version ?? "?"}`;
   const label = status === "online" ? online : LABELS[status];
   const tone = status === "online" ? "online" : status === "checking" ? "checking" : "offline";

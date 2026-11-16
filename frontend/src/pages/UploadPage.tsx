@@ -4,7 +4,7 @@ import { ErrorMessage } from "../components/Feedback";
 import { ImageDropzone } from "../components/ImageDropzone";
 import { useAsync } from "../hooks/useAsync";
 import { useObjectUrl } from "../hooks/useObjectUrl";
-import { listModelVersions, requestAnalysis, uploadImage } from "../services/api";
+import { isBrowserMode, listModelVersions, requestAnalysis, uploadImage } from "../services/api";
 import { formatBytes, formatNumber } from "../services/format";
 import { validateImageFile } from "../services/imageValidation";
 import type { ImageRead, ModelVersionRead } from "../types/api";
@@ -45,7 +45,7 @@ function MethodPicker({
                 Modelo experimental {model.name} v{model.version}
               </strong>
               <span className="muted small">
-                Segmentación de tejidos con PyTorch
+                {isBrowserMode() ? "Modelo entrenado · ONNX en tu dispositivo · descarga inicial de 55 MiB" : "Segmentación de tejidos con PyTorch"}
                 {typeof images === "number" && ` · entrenado con ${images} imágenes`}
                 {typeof dice === "number" && ` · Dice medio ${formatNumber(dice)}`}
               </span>
@@ -77,8 +77,8 @@ export function UploadPage() {
   const previewUrl = useObjectUrl(file);
   const busy = phase !== "idle";
   const [method, setMethod] = useState(HEURISTIC);
-  // Si la lista de modelos falla, se ofrece solo la heurística.
-  const activeModels = useAsync(() => listModelVersions(true), []).data ?? [];
+  const modelsState = useAsync(() => listModelVersions(true), []);
+  const activeModels = modelsState.data ?? [];
 
   function handleSelect(selected: File) {
     const error = validateImageFile(selected);
@@ -154,6 +154,7 @@ export function UploadPage() {
             </p>
           )}
 
+          {modelsState.error != null && <ErrorMessage error={modelsState.error} title="No se pudo consultar el modelo experimental" />}
           {activeModels.length > 0 && (
             <MethodPicker models={activeModels} value={method} onChange={setMethod} disabled={busy} />
           )}
@@ -195,7 +196,7 @@ export function UploadPage() {
           <h2 id="how-it-works-title">Cómo funciona</h2>
           <ol className="steps">
             <li>
-              <strong>Validación.</strong> El servidor comprueba que el archivo sea realmente una imagen JPG o PNG.
+              <strong>Validación.</strong> La aplicación comprueba que el archivo sea realmente una imagen JPG o PNG.
             </li>
             <li>
               <strong>Registro.</strong> La imagen se guarda sin datos personales y se crea una solicitud de análisis.

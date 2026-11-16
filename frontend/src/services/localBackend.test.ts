@@ -4,6 +4,7 @@ import { makeFile } from "../test/utils";
 import { ApiError } from "./errors";
 import * as local from "./localBackend";
 import { resetDatabaseConnection } from "./localStore";
+import manifest from "../../public/models/dermai/manifest.json";
 
 const fakeOutput = {
   necroticAreaRatio: 0.25,
@@ -18,7 +19,10 @@ beforeEach(async () => {
   await resetDatabaseConnection();
   globalThis.indexedDB = new IDBFactory();
   vi.spyOn(local.browserRuntime, "decode").mockResolvedValue({ data: new Uint8Array(64 * 48 * 3), width: 64, height: 48 });
+  vi.spyOn(local.browserRuntime, "sanitize").mockResolvedValue(new Blob(["sanitized"], { type: "image/png" }));
   vi.spyOn(local.browserRuntime, "analyze").mockResolvedValue(fakeOutput);
+  vi.spyOn(local.browserRuntime, "analyzeModel").mockResolvedValue({ ...fakeOutput, confidence: 0.84,
+    labels: new Uint8Array(4), roiMask: new Uint8Array(4), result: { method: { type: "model", name: manifest.name } } });
   vi.spyOn(local.browserRuntime, "renderProcessed").mockResolvedValue(new Blob(["png"], { type: "image/png" }));
 });
 
@@ -33,7 +37,7 @@ describe("modo navegador (IndexedDB)", () => {
     expect(image).toMatchObject({
       original_filename: "lesion.png",
       content_type: "image/png",
-      file_size_bytes: 2048,
+      file_size_bytes: 9,
       width: 64,
       height: 48,
     });
@@ -81,6 +85,29 @@ describe("modo navegador (IndexedDB)", () => {
     const analysis = await local.requestAnalysis(image.id, "modelo-1");
     expect(analysis.status).toBe("failed");
     expect(analysis.error_message).toMatch(/modelo experimental no está disponible/);
+    expect(local.browserRuntime.analyze).not.toHaveBeenCalled();
+  });
+
+  it("ofrece el modelo real y conserva su identidad, confianza e historial", async () => {
+    expect((await local.listModelVersions())[0].id).toBe(manifest.id);
+    const image = await local.uploadImage(makeFile());
+    const result = await local.requestAnalysis(image.id, manifest.id);
+    expect(result).toMatchObject({ status: "completed", model_version_id: manifest.id, confidence: 0.84 });
+    expect(result.result?.method).toMatchObject({ type: "model" });
+    expect(local.browserRuntime.analyze).not.toHaveBeenCalled();
+    expect(await local.getAnalysis(result.id)).toEqual(result);
+    await local.deleteImage(image.id);
+    expect((await local.listAnalyses()).total).toBe(0);
+    expect(await local.loadImageBlob("original", image.id)).toBeNull();
+    expect(await local.loadImageBlob("processed", result.id)).toBeNull();
+  });
+
+  it("no sustituye el modelo por la heurística si falla ONNX", async () => {
+    vi.mocked(local.browserRuntime.analyzeModel).mockRejectedValueOnce(new Error("Descarga ONNX fallida"));
+    const image = await local.uploadImage(makeFile());
+    const result = await local.requestAnalysis(image.id, manifest.id);
+    expect(result).toMatchObject({ status: "failed", model_version_id: manifest.id, confidence: null });
+    expect(result.error_message).toContain("Descarga ONNX fallida");
     expect(local.browserRuntime.analyze).not.toHaveBeenCalled();
   });
 
