@@ -1,0 +1,18 @@
+{
+  "name": "unet-resnet18-woundtissue",
+  "version": "0.1.0",
+  "description": "U-Net con encoder ResNet-18 (ImageNet) para segmentar tejidos de herida. Prueba de concepto entrenada con la muestra pública de WoundTissue (13 imágenes).",
+  "data_root": "ai/datasets/woundtissue/raw/WoundTissue-main",
+  "pretrained_encoder": true,
+  "input_size": 256,
+  "epochs": 40,
+  "batch_size": 8,
+  "samples_per_image": 20,
+  "learning_rate": 0.0003,
+  "weight_decay": 0.0001,
+  "dice_loss_weight": 1.0,
+  "folds": 5,
+  "seed": 42,
+  "device": "auto",
+  "evaluate_heuristic": true
+}

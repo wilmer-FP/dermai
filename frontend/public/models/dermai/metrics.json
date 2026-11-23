@@ -1,0 +1,436 @@
+{
+  "dataset": {
+    "images": 13,
+    "names": [
+      "img (1)",
+      "img (12)",
+      "img (2)",
+      "img (20)",
+      "img (23)",
+      "img (27)",
+      "img (28)",
+      "img (29)",
+      "img (30)",
+      "img (31)",
+      "img (5)",
+      "img (6)",
+      "img (8)"
+    ],
+    "class_pixel_fraction": {
+      "background": 0.5614041498584653,
+      "granulation": 0.29396418629599225,
+      "slough": 0.04494657699972463,
+      "necrosis": 0.047501902138094576,
+      "maceration": 0.04864383752934774,
+      "tendon": 0.0,
+      "bone": 0.0035393471783755283
+    },
+    "images_per_class": {
+      "background": 13,
+      "granulation": 8,
+      "slough": 5,
+      "necrosis": 2,
+      "maceration": 5,
+      "tendon": 0,
+      "bone": 1
+    }
+  },
+  "cross_validation": {
+    "folds": 5,
+    "classes": {
+      "pixel_accuracy": 0.9625249431316175,
+      "mean_iou": 0.6938546714588111,
+      "mean_dice": 0.7520198703172984,
+      "mean_iou_foreground": 0.633990536772809,
+      "mean_dice_foreground": 0.703108646661569,
+      "per_class": {
+        "background": {
+          "support_pixels": 430172,
+          "predicted_pixels": 428470,
+          "iou": 0.9931753448888208,
+          "dice": 0.9965759885959456,
+          "precision": 0.9985553247601933,
+          "sensitivity": 0.9946044837878802,
+          "specificity": 0.9981581273004811
+        },
+        "granulation": {
+          "support_pixels": 225248,
+          "predicted_pixels": 230538,
+          "iou": 0.9119663067462015,
+          "dice": 0.9539564620238445,
+          "precision": 0.9430115642540492,
+          "sensitivity": 0.9651584031822702,
+          "specificity": 0.9757151175149493
+        },
+        "slough": {
+          "support_pixels": 34440,
+          "predicted_pixels": 40434,
+          "iou": 0.6900817118865965,
+          "dice": 0.8166252637764778,
+          "precision": 0.7560963545530989,
+          "sensitivity": 0.8876887340301974,
+          "specificity": 0.9865236955847407
+        },
+        "necrosis": {
+          "support_pixels": 36398,
+          "predicted_pixels": 39582,
+          "iou": 0.9184930815069184,
+          "dice": 0.95751513556199,
+          "precision": 0.9190035874892628,
+          "sensitivity": 0.9993955711852299,
+          "specificity": 0.9956072864786358
+        },
+        "maceration": {
+          "support_pixels": 37273,
+          "predicted_pixels": 27059,
+          "iou": 0.649411583724329,
+          "dice": 0.7874463719455326,
+          "precision": 0.9360656343545586,
+          "sensitivity": 0.6795535642422129,
+          "specificity": 0.9976267884823793
+        },
+        "tendon": {
+          "support_pixels": 0,
+          "predicted_pixels": 0,
+          "iou": null,
+          "dice": null,
+          "precision": null,
+          "sensitivity": null,
+          "specificity": 1.0
+        },
+        "bone": {
+          "support_pixels": 2712,
+          "predicted_pixels": 160,
+          "iou": 0.0,
+          "dice": 0.0,
+          "precision": 0.0,
+          "sensitivity": 0.0,
+          "specificity": 0.9997904472771898
+        }
+      }
+    },
+    "groups": {
+      "pixel_accuracy": 0.9625249431316175,
+      "mean_iou": 0.8237176173639164,
+      "mean_dice": 0.8956934533914491,
+      "mean_iou_foreground": 0.7813531854826903,
+      "mean_dice_foreground": 0.8704728195903252,
+      "per_class": {
+        "background": {
+          "support_pixels": 430172,
+          "predicted_pixels": 428470,
+          "iou": 0.9931753448888208,
+          "dice": 0.9965759885959456,
+          "precision": 0.9985553247601933,
+          "sensitivity": 0.9946044837878802,
+          "specificity": 0.9981581273004811
+        },
+        "granulation": {
+          "support_pixels": 225248,
+          "predicted_pixels": 230538,
+          "iou": 0.9119663067462015,
+          "dice": 0.9539564620238445,
+          "precision": 0.9430115642540492,
+          "sensitivity": 0.9651584031822702,
+          "specificity": 0.9757151175149493
+        },
+        "slough": {
+          "support_pixels": 34440,
+          "predicted_pixels": 40434,
+          "iou": 0.6900817118865965,
+          "dice": 0.8166252637764778,
+          "precision": 0.7560963545530989,
+          "sensitivity": 0.8876887340301974,
+          "specificity": 0.9865236955847407
+        },
+        "necrotic": {
+          "support_pixels": 36398,
+          "predicted_pixels": 39582,
+          "iou": 0.9184930815069184,
+          "dice": 0.95751513556199,
+          "precision": 0.9190035874892628,
+          "sensitivity": 0.9993955711852299,
+          "specificity": 0.9956072864786358
+        },
+        "other": {
+          "support_pixels": 39985,
+          "predicted_pixels": 27219,
+          "iou": 0.6048716417910448,
+          "dice": 0.7537944169989882,
+          "precision": 0.9305632095227598,
+          "sensitivity": 0.6334625484556708,
+          "specificity": 0.9973976190279488
+        }
+      }
+    },
+    "necrotic_ratio_mae": 0.017101575878672306,
+    "per_fold": [
+      {
+        "fold": 1,
+        "validation_images": [
+          "img (1)",
+          "img (8)",
+          "img (29)"
+        ],
+        "mean_dice_foreground": 0.8251445776486562,
+        "mean_iou_foreground": 0.7062066396311192
+      },
+      {
+        "fold": 2,
+        "validation_images": [
+          "img (5)",
+          "img (31)",
+          "img (20)"
+        ],
+        "mean_dice_foreground": 0.5842437002864129,
+        "mean_iou_foreground": 0.4968312628099948
+      },
+      {
+        "fold": 3,
+        "validation_images": [
+          "img (28)",
+          "img (27)",
+          "img (2)"
+        ],
+        "mean_dice_foreground": 0.5859566744966195,
+        "mean_iou_foreground": 0.5253871783048498
+      },
+      {
+        "fold": 4,
+        "validation_images": [
+          "img (23)",
+          "img (6)"
+        ],
+        "mean_dice_foreground": 0.49620248328557787,
+        "mean_iou_foreground": 0.4924622162904094
+      },
+      {
+        "fold": 5,
+        "validation_images": [
+          "img (12)",
+          "img (30)"
+        ],
+        "mean_dice_foreground": 0.9785307478730008,
+        "mean_iou_foreground": 0.9583538186594911
+      }
+    ],
+    "per_image": [
+      {
+        "image": "img (1)",
+        "fold": 1,
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.0
+      },
+      {
+        "image": "img (8)",
+        "fold": 1,
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.0
+      },
+      {
+        "image": "img (29)",
+        "fold": 1,
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.1839851024208566
+      },
+      {
+        "image": "img (5)",
+        "fold": 2,
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.0
+      },
+      {
+        "image": "img (31)",
+        "fold": 2,
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.000211954217888936
+      },
+      {
+        "image": "img (20)",
+        "fold": 2,
+        "true_necrotic_ratio": 0.9572523894548892,
+        "predicted_necrotic_ratio": 0.9909751946779434
+      },
+      {
+        "image": "img (28)",
+        "fold": 3,
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.0
+      },
+      {
+        "image": "img (27)",
+        "fold": 3,
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.0
+      },
+      {
+        "image": "img (2)",
+        "fold": 3,
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.0
+      },
+      {
+        "image": "img (23)",
+        "fold": 4,
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.0
+      },
+      {
+        "image": "img (6)",
+        "fold": 4,
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.0
+      },
+      {
+        "image": "img (12)",
+        "fold": 5,
+        "true_necrotic_ratio": 1.0,
+        "predicted_necrotic_ratio": 0.9995091890712766
+      },
+      {
+        "image": "img (30)",
+        "fold": 5,
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.003909813632216865
+      }
+    ]
+  },
+  "heuristic_baseline": {
+    "groups": {
+      "pixel_accuracy": 0.6203149653569429,
+      "mean_iou": 0.2983668784523923,
+      "mean_dice": 0.357076919695566,
+      "mean_iou_foreground": 0.12757390833032706,
+      "mean_dice_foreground": 0.1986753042948392,
+      "per_class": {
+        "background": {
+          "support_pixels": 430172,
+          "predicted_pixels": 430870,
+          "iou": 0.9815387589406533,
+          "dice": 0.9906833812984732,
+          "precision": 0.9898809385661569,
+          "sensitivity": 0.9914871260798006,
+          "specificity": 0.9870265509371532
+        },
+        "granulation": {
+          "support_pixels": 225248,
+          "predicted_pixels": 0,
+          "iou": 0.0,
+          "dice": 0.0,
+          "precision": null,
+          "sensitivity": 0.0,
+          "specificity": 1.0
+        },
+        "slough": {
+          "support_pixels": 34440,
+          "predicted_pixels": 78168,
+          "iou": 0.3803552384804913,
+          "dice": 0.5510976129582268,
+          "precision": 0.39695271722443964,
+          "sensitivity": 0.9009581881533101,
+          "specificity": 0.9355851233187074
+        },
+        "necrotic": {
+          "support_pixels": 36398,
+          "predicted_pixels": 2776,
+          "iou": 0.07626792680916535,
+          "dice": 0.14172665543472712,
+          "precision": 1.0,
+          "sensitivity": 0.07626792680916535,
+          "specificity": 1.0
+        },
+        "other": {
+          "support_pixels": 39985,
+          "predicted_pixels": 254429,
+          "iou": 0.05367246803165162,
+          "dice": 0.10187694878640283,
+          "precision": 0.058943752481045796,
+          "sensitivity": 0.375065649618607,
+          "specificity": 0.6703210153967323
+        }
+      }
+    },
+    "necrotic_ratio_mae": 0.13942710688114532,
+    "per_image": [
+      {
+        "image": "img (1)",
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.0
+      },
+      {
+        "image": "img (12)",
+        "true_necrotic_ratio": 1.0,
+        "predicted_necrotic_ratio": 0.0
+      },
+      {
+        "image": "img (2)",
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.0
+      },
+      {
+        "image": "img (20)",
+        "true_necrotic_ratio": 0.9572523894548892,
+        "predicted_necrotic_ratio": 0.1447
+      },
+      {
+        "image": "img (23)",
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.0
+      },
+      {
+        "image": "img (27)",
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.0
+      },
+      {
+        "image": "img (28)",
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.0
+      },
+      {
+        "image": "img (29)",
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.0
+      },
+      {
+        "image": "img (30)",
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.0
+      },
+      {
+        "image": "img (31)",
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.0
+      },
+      {
+        "image": "img (5)",
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.0
+      },
+      {
+        "image": "img (6)",
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.0
+      },
+      {
+        "image": "img (8)",
+        "true_necrotic_ratio": 0.0,
+        "predicted_necrotic_ratio": 0.0
+      }
+    ]
+  },
+  "summary": {
+    "evaluation": "validación cruzada de 5 particiones",
+    "training_images": 13,
+    "cv_fold_dice_mean": 0.6940156367180534,
+    "cv_fold_dice_std": 0.17944375644770652,
+    "cv_mean_dice_foreground": 0.8704728195903252,
+    "cv_mean_iou_foreground": 0.7813531854826903,
+    "cv_necrotic_dice": 0.95751513556199,
+    "cv_necrotic_ratio_mae": 0.017101575878672306,
+    "heuristic_mean_dice_foreground": 0.1986753042948392,
+    "heuristic_necrotic_dice": 0.14172665543472712,
+    "heuristic_necrotic_ratio_mae": 0.13942710688114532
+  },
+  "duration_seconds": 685.9
+}

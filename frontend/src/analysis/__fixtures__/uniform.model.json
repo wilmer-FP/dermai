@@ -1,0 +1,133 @@
+{
+  "confidence": 0.9596,
+  "necrotic_area_ratio": 0.0,
+  "result": {
+    "method": {
+      "name": "unet-resnet18-woundtissue",
+      "version": "0.1.0",
+      "type": "model",
+      "description": "U-Net con encoder ResNet-18 (ImageNet) para segmentar tejidos de herida. Prueba de concepto entrenada con la muestra pública de WoundTissue (13 imágenes)."
+    },
+    "model": {
+      "architecture": "unet-resnet18",
+      "classes": [
+        "background",
+        "granulation",
+        "slough",
+        "necrosis",
+        "maceration",
+        "tendon",
+        "bone"
+      ],
+      "input_size": 256,
+      "training_images": 13,
+      "device": "cpu"
+    },
+    "confidence_definition": "Media, sobre los píxeles de herida, de la probabilidad que el modelo asigna a la clase predicha. No está calibrada: no es la probabilidad de que el resultado sea correcto.",
+    "segmentation": {
+      "roi_area_ratio": 1.0,
+      "fallback_full_image": false
+    },
+    "tissue_composition": {
+      "necrotic": 0.0,
+      "slough": 1.0,
+      "granulation": 0.0,
+      "other": 0.0
+    },
+    "class_composition": {
+      "granulation": 0.0,
+      "slough": 1.0,
+      "necrosis": 0.0,
+      "maceration": 0.0,
+      "tendon": 0.0,
+      "bone": 0.0
+    },
+    "color": {
+      "lesion_lab_mean": [
+        72.7141,
+        5.8362,
+        8.4061
+      ],
+      "lesion_lab_std": [
+        0.1748,
+        0.4282,
+        0.4208
+      ],
+      "lesion_chroma_mean": 10.2472,
+      "skin_reference_lab": [
+        72.7112,
+        5.7344,
+        8.375
+      ],
+      "delta_e_to_skin_mean": 0.5635
+    },
+    "texture": {
+      "contrast": 64.5327,
+      "homogeneity": 0.402,
+      "energy": 0.2565,
+      "correlation": 0.3892,
+      "entropy": 4.3179,
+      "laplacian_variance": 8.4726
+    },
+    "edges": {
+      "edge_density": 0.0,
+      "gradient_mean": 3.0528,
+      "border_gradient_mean": 0.0
+    },
+    "shape": {
+      "area_ratio": 1.0,
+      "perimeter_px": 1788.0,
+      "circularity": 0.7693,
+      "solidity": 1.0,
+      "eccentricity": 0.6614,
+      "aspect_ratio": 1.3342
+    },
+    "quality": {
+      "lightness_mean": 72.7141,
+      "lightness_std": 0.1748,
+      "sharpness": 8.4726,
+      "glare_ratio": 0.0
+    },
+    "warnings": [
+      "La imagen parece desenfocada.",
+      "Modelo de prueba de concepto entrenado con solo 13 imágenes; sus resultados no son fiables."
+    ],
+    "legend": [
+      {
+        "label": "Herida detectada",
+        "color": "#50dc50",
+        "kind": "outline"
+      },
+      {
+        "label": "Granulación",
+        "color": "#e62828",
+        "kind": "fill"
+      },
+      {
+        "label": "Esfacelo",
+        "color": "#ffd700",
+        "kind": "fill"
+      },
+      {
+        "label": "Necrosis",
+        "color": "#ff00ff",
+        "kind": "fill"
+      },
+      {
+        "label": "Maceración",
+        "color": "#ebebeb",
+        "kind": "fill"
+      },
+      {
+        "label": "Tendón",
+        "color": "#87ceeb",
+        "kind": "fill"
+      },
+      {
+        "label": "Hueso",
+        "color": "#ffc87c",
+        "kind": "fill"
+      }
+    ]
+  }
+}

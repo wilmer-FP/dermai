@@ -1,0 +1,169 @@
+{
+  "checkpoint_sha256": "2892d83d0b21f75fabd0f887f97bba6f5e68039b3d86529dfe09936f685b73cf",
+  "onnx_sha256": "b13fb5cc6d672feaf417487514b149e33ca6132d0418187292303adba66b1582",
+  "bytes": 57285761,
+  "quantization": "none; float32",
+  "opset": 17,
+  "load_ms": 96.83599999880244,
+  "process_rss_bytes": 884396032,
+  "process_peak_wset_bytes": 954990592,
+  "memory_note": "Entire Python process including PyTorch and ORT; not browser memory.",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "torch": "2.11.0+cu128",
+  "onnx": "1.23.2",
+  "onnxruntime": "1.32.0",
+  "cases": [
+    {
+      "name": "wound",
+      "shape": [
+        1,
+        3,
+        192,
+        256
+      ],
+      "max_logit_error": 4.559755325317383e-06,
+      "mean_logit_error": 2.932244171915954e-07,
+      "max_probability_error": 1.1920928955078125e-06,
+      "label_agreement": 1.0,
+      "pytorch_ms": 109.5063000011578,
+      "onnx_ms": [
+        74.06000000082713,
+        73.04170000134036,
+        68.99580000026617
+      ]
+    },
+    {
+      "name": "dark_skin",
+      "shape": [
+        1,
+        3,
+        192,
+        256
+      ],
+      "max_logit_error": 5.381181836128235e-06,
+      "mean_logit_error": 4.3536493876672466e-07,
+      "max_probability_error": 1.7881393432617188e-06,
+      "label_agreement": 1.0,
+      "pytorch_ms": 95.02489999977115,
+      "onnx_ms": [
+        68.13760000113689,
+        68.40320000083011,
+        66.86769999942044
+      ]
+    },
+    {
+      "name": "red_lesion",
+      "shape": [
+        1,
+        3,
+        192,
+        256
+      ],
+      "max_logit_error": 3.874301910400391e-06,
+      "mean_logit_error": 2.89318222712609e-07,
+      "max_probability_error": 1.3709068298339844e-06,
+      "label_agreement": 1.0,
+      "pytorch_ms": 97.04570000030799,
+      "onnx_ms": [
+        64.28109999978915,
+        63.042899999345536,
+        62.37390000023879
+      ]
+    },
+    {
+      "name": "uniform",
+      "shape": [
+        1,
+        3,
+        192,
+        256
+      ],
+      "max_logit_error": 1.5497207641601562e-06,
+      "mean_logit_error": 2.4007127308323106e-07,
+      "max_probability_error": 2.980232238769531e-07,
+      "label_agreement": 1.0,
+      "pytorch_ms": 101.68000000157917,
+      "onnx_ms": [
+        68.37399999858462,
+        69.87239999943995,
+        70.64979999995558
+      ]
+    },
+    {
+      "name": "random-319x173",
+      "shape": [
+        1,
+        3,
+        139,
+        256
+      ],
+      "max_logit_error": 1.0251998901367188e-05,
+      "mean_logit_error": 5.518977559404448e-07,
+      "max_probability_error": 1.7881393432617188e-06,
+      "label_agreement": 1.0,
+      "pytorch_ms": 82.655899999736,
+      "onnx_ms": [
+        54.10219999976107,
+        51.26919999929669,
+        53.28019999979006
+      ]
+    },
+    {
+      "name": "random-173x319",
+      "shape": [
+        1,
+        3,
+        256,
+        139
+      ],
+      "max_logit_error": 1.5497207641601562e-05,
+      "mean_logit_error": 5.914833991482737e-07,
+      "max_probability_error": 2.1457672119140625e-06,
+      "label_agreement": 1.0,
+      "pytorch_ms": 77.45550000072399,
+      "onnx_ms": [
+        53.265799999280716,
+        54.28910000046017,
+        52.286100000856095
+      ]
+    },
+    {
+      "name": "random-256x1",
+      "shape": [
+        1,
+        3,
+        1,
+        256
+      ],
+      "max_logit_error": 7.152557373046875e-07,
+      "mean_logit_error": 1.1480499750859963e-07,
+      "max_probability_error": 8.940696716308594e-08,
+      "label_agreement": 1.0,
+      "pytorch_ms": 18.645100000867387,
+      "onnx_ms": [
+        3.1865999990259297,
+        2.4914999994507525,
+        2.774300000965013
+      ]
+    },
+    {
+      "name": "random-1x256",
+      "shape": [
+        1,
+        3,
+        256,
+        1
+      ],
+      "max_logit_error": 7.152557373046875e-07,
+      "mean_logit_error": 1.1230856244992538e-07,
+      "max_probability_error": 1.043081283569336e-07,
+      "label_agreement": 1.0,
+      "pytorch_ms": 105.69279999981518,
+      "onnx_ms": [
+        3.923799999029143,
+        3.2434999993711244,
+        3.828599999906146
+      ]
+    }
+  ]
+}

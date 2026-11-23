@@ -1,0 +1,113 @@
+{
+  "name": "unet-resnet18-woundtissue",
+  "version": "0.1.0",
+  "description": "U-Net con encoder ResNet-18 (ImageNet) para segmentar tejidos de herida. Prueba de concepto entrenada con la muestra pública de WoundTissue (13 imágenes).",
+  "architecture": "unet-resnet18",
+  "classes": [
+    "background",
+    "granulation",
+    "slough",
+    "necrosis",
+    "maceration",
+    "tendon",
+    "bone"
+  ],
+  "input_size": 256,
+  "normalization": "imagenet",
+  "pretrained_encoder": true,
+  "training_images": 13,
+  "dataset": "WoundTissue (muestra pública, CC BY-NC-SA 4.0)",
+  "run_id": "20261105T231652Z_unet-resnet18-woundtissue",
+  "created_at": "2026-11-05T23:28:17.721592+00:00",
+  "id": "unet-resnet18-woundtissue:0.1.0:onnx",
+  "file": "model.onnx",
+  "sha256": "b13fb5cc6d672feaf417487514b149e33ca6132d0418187292303adba66b1582",
+  "bytes": 57285761,
+  "checkpoint_sha256": "2892d83d0b21f75fabd0f887f97bba6f5e68039b3d86529dfe09936f685b73cf",
+  "license": "CC-BY-NC-SA-4.0",
+  "metrics": {
+    "evaluation": "validación cruzada de 5 particiones",
+    "training_images": 13,
+    "cv_fold_dice_mean": 0.6940156367180534,
+    "cv_fold_dice_std": 0.17944375644770652,
+    "cv_mean_dice_foreground": 0.8704728195903252,
+    "cv_mean_iou_foreground": 0.7813531854826903,
+    "cv_necrotic_dice": 0.95751513556199,
+    "cv_necrotic_ratio_mae": 0.017101575878672306,
+    "heuristic_mean_dice_foreground": 0.1986753042948392,
+    "heuristic_necrotic_dice": 0.14172665543472712,
+    "heuristic_necrotic_ratio_mae": 0.13942710688114532
+  },
+  "class_details": [
+    {
+      "key": "background",
+      "label": "Fondo",
+      "group": "background",
+      "color": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "key": "granulation",
+      "label": "Granulación",
+      "group": "granulation",
+      "color": [
+        230,
+        40,
+        40
+      ]
+    },
+    {
+      "key": "slough",
+      "label": "Esfacelo",
+      "group": "slough",
+      "color": [
+        255,
+        215,
+        0
+      ]
+    },
+    {
+      "key": "necrosis",
+      "label": "Necrosis",
+      "group": "necrotic",
+      "color": [
+        255,
+        0,
+        255
+      ]
+    },
+    {
+      "key": "maceration",
+      "label": "Maceración",
+      "group": "other",
+      "color": [
+        235,
+        235,
+        235
+      ]
+    },
+    {
+      "key": "tendon",
+      "label": "Tendón",
+      "group": "other",
+      "color": [
+        135,
+        206,
+        235
+      ]
+    },
+    {
+      "key": "bone",
+      "label": "Hueso",
+      "group": "other",
+      "color": [
+        255,
+        200,
+        124
+      ]
+    }
+  ]
+}
